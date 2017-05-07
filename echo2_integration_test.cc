@@ -1,27 +1,31 @@
 #include "test/integration/integration.h"
 #include "test/integration/utility.h"
 
-class Echo2IntegrationTest : public BaseIntegrationTest, public testing::Test {
+class Echo2IntegrationTest : public BaseIntegrationTest,
+                             public testing::TestWithParam<Network::Address::IpVersion> {
 public:
   /**
-   * Global initializer for all integration tests.
+   * Initializer for an individual integration test.
    */
-  static void SetUpTestCase() {
-    createTestServer("echo2_server.json", {"echo"});
+  void SetUp() override {
+    createTestServer("echo2_server.json", GetParam(), {"echo"});
   }
 
   /**
-   * Global destructor for all integration tests.
+   * Destructor for an individual integration test.
    */
-  static void TearDownTestCase() {
+  void TearDown() override {
     test_server_.reset();
   }
 };
 
-TEST_F(Echo2IntegrationTest, Echo) {
+INSTANTIATE_TEST_CASE_P(IpVersions, Echo2IntegrationTest,
+                        testing::ValuesIn(TestEnvironment::getIpVersionsForTest()));
+
+TEST_P(Echo2IntegrationTest, Echo) {
   Buffer::OwnedImpl buffer("hello");
   std::string response;
-  RawConnectionDriver connection(lookupPort("echo"), buffer,
+  RawConnectionDriver connection(lookupPort("echo"), GetParam(), buffer,
                                  [&](Network::ClientConnection&, const Buffer::Instance& data)
                                      -> void {
                                        response.append(TestUtility::bufferToString(data));
