@@ -13,10 +13,10 @@ namespace Filter {
 class Echo2 : public Network::ReadFilter, Logger::Loggable<Logger::Id::filter> {
 public:
   // Network::ReadFilter
- Network::FilterStatus onData(Buffer::Instance& data) override;
- Network::FilterStatus onNewConnection() override { return Network::FilterStatus::Continue; }
- void initializeReadFilterCallbacks( Network::ReadFilterCallbacks& callbacks) override {
-   read_callbacks_ = &callbacks;
+  Network::FilterStatus onData(Buffer::Instance& data) override;
+  Network::FilterStatus onNewConnection() override { return Network::FilterStatus::Continue; }
+  void initializeReadFilterCallbacks(Network::ReadFilterCallbacks& callbacks) override {
+    read_callbacks_ = &callbacks;
   }
 
 private:
