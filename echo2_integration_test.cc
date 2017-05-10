@@ -1,6 +1,7 @@
 #include "test/integration/integration.h"
 #include "test/integration/utility.h"
 
+namespace Lyft {
 class Echo2IntegrationTest : public BaseIntegrationTest,
                              public testing::TestWithParam<Network::Address::IpVersion> {
 public:
@@ -35,3 +36,4 @@ TEST_P(Echo2IntegrationTest, Echo) {
   connection.run();
   EXPECT_EQ("hello", response);
 }
+} // Lyft
