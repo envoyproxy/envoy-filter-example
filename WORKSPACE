@@ -2,7 +2,7 @@ workspace(name = "envoy")
 
 local_repository(
     name = "envoy",
-    path = "/source",
+    path = "envoy",
 )
 
 load("//bazel:repositories.bzl", "envoy_dependencies")
