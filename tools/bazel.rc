@@ -1,1 +1,1 @@
-/source/tools/bazel.rc
+../envoy/bazel/get_workspace_status
