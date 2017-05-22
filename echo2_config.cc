@@ -13,15 +13,19 @@ namespace Configuration {
 class Echo2ConfigFactory : public NetworkFilterConfigFactory {
 public:
   // NetworkFilterConfigFactory
-  NetworkFilterFactoryCb tryCreateFilterFactory(NetworkFilterType type, const std::string& name,
-                                                const Json::Object&, Server::Instance&) {
-    if (type != NetworkFilterType::Read || name != "echo2") {
-      return nullptr;
+  NetworkFilterFactoryCb createFilterFactory(NetworkFilterType type, const Json::Object&,
+                                             Server::Instance&) override {
+    if (type != NetworkFilterType::Read) {
+      throw EnvoyException(
+          fmt::format("{} network filter must be configured as a read filter.", name()));
     }
 
-    return [](Network::FilterManager& filter_manager)
-        -> void { filter_manager.addReadFilter(Network::ReadFilterSharedPtr{new Filter::Echo2()}); };
+    return [](Network::FilterManager& filter_manager) -> void {
+      filter_manager.addReadFilter(Network::ReadFilterSharedPtr{new Filter::Echo2()});
+    };
   }
+
+  std::string name() override { return "echo2"; }
 };
 
 /**
