@@ -9,7 +9,7 @@ public:
    * Initializer for an individual integration test.
    */
   void SetUp() override {
-    createTestServer("echo2_server.json", GetParam(), {"echo"});
+    createTestServer("echo2_server.json", {"echo"}, GetParam());
   }
 
   /**
@@ -26,12 +26,12 @@ INSTANTIATE_TEST_CASE_P(IpVersions, Echo2IntegrationTest,
 TEST_P(Echo2IntegrationTest, Echo) {
   Buffer::OwnedImpl buffer("hello");
   std::string response;
-  RawConnectionDriver connection(lookupPort("echo"), GetParam(), buffer,
+  RawConnectionDriver connection(lookupPort("echo"), buffer,
                                  [&](Network::ClientConnection&, const Buffer::Instance& data)
                                      -> void {
                                        response.append(TestUtility::bufferToString(data));
                                        connection.close();
-                                     });
+                                     }, GetParam());
 
   connection.run();
   EXPECT_EQ("hello", response);
