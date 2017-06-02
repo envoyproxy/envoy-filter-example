@@ -5,11 +5,12 @@ namespace Envoy {
 class Echo2IntegrationTest : public BaseIntegrationTest,
                              public testing::TestWithParam<Network::Address::IpVersion> {
 public:
+  Echo2IntegrationTest() : BaseIntegrationTest(GetParam()) {}
   /**
    * Initializer for an individual integration test.
    */
   void SetUp() override {
-    createTestServer("echo2_server.json", {"echo"}, GetParam());
+    createTestServer("echo2_server.json", {"echo"});
   }
 
   /**
