@@ -1,24 +1,30 @@
 #include "test/integration/integration.h"
 #include "test/integration/utility.h"
 
-class Echo2IntegrationTest : public BaseIntegrationTest, public testing::Test {
+namespace Envoy {
+class Echo2IntegrationTest : public BaseIntegrationTest,
+                             public testing::TestWithParam<Network::Address::IpVersion> {
 public:
+  Echo2IntegrationTest() : BaseIntegrationTest(GetParam()) {}
   /**
-   * Global initializer for all integration tests.
+   * Initializer for an individual integration test.
    */
-  static void SetUpTestCase() {
+  void SetUp() override {
     createTestServer("echo2_server.json", {"echo"});
   }
 
   /**
-   * Global destructor for all integration tests.
+   * Destructor for an individual integration test.
    */
-  static void TearDownTestCase() {
+  void TearDown() override {
     test_server_.reset();
   }
 };
 
-TEST_F(Echo2IntegrationTest, Echo) {
+INSTANTIATE_TEST_CASE_P(IpVersions, Echo2IntegrationTest,
+                        testing::ValuesIn(TestEnvironment::getIpVersionsForTest()));
+
+TEST_P(Echo2IntegrationTest, Echo) {
   Buffer::OwnedImpl buffer("hello");
   std::string response;
   RawConnectionDriver connection(lookupPort("echo"), buffer,
@@ -26,8 +32,9 @@ TEST_F(Echo2IntegrationTest, Echo) {
                                      -> void {
                                        response.append(TestUtility::bufferToString(data));
                                        connection.close();
-                                     });
+                                     }, GetParam());
 
   connection.run();
   EXPECT_EQ("hello", response);
 }
+} // Envoy

@@ -5,6 +5,7 @@
 
 #include "common/common/assert.h"
 
+namespace Envoy {
 namespace Filter {
 
 Network::FilterStatus Echo2::onData(Buffer::Instance& data) {
@@ -15,3 +16,4 @@ Network::FilterStatus Echo2::onData(Buffer::Instance& data) {
 }
 
 } // Filter
+} // Envoy
