@@ -1,4 +1,4 @@
-#include "envoy/network/connection.h"
+#include <string>
 
 #include "echo2.h"
 #include "server/configuration_impl.h"
@@ -13,19 +13,13 @@ namespace Configuration {
 class Echo2ConfigFactory : public NamedNetworkFilterConfigFactory {
 public:
   // NamedNetworkFilterConfigFactory
-  NetworkFilterFactoryCb createFilterFactory(NetworkFilterType type, const Json::Object&,
-                                             Server::Instance&) override {
-    if (type != NetworkFilterType::Read) {
-      throw EnvoyException(
-          fmt::format("{} network filter must be configured as a read filter.", name()));
-    }
-
-    return [](Network::FilterManager& filter_manager) -> void {
-      filter_manager.addReadFilter(Network::ReadFilterSharedPtr{new Filter::Echo2()});
-    };
+  NetworkFilterFactoryCb createFilterFactory(const Json::Object&, FactoryContext&) override {
+    return [](Network::FilterManager& filter_manager)
+        -> void { filter_manager.addReadFilter(Network::ReadFilterSharedPtr{new Filter::Echo2()}); };
   }
 
   std::string name() override { return "echo2"; }
+  NetworkFilterType type() override { return NetworkFilterType::Read; }
 };
 
 /**

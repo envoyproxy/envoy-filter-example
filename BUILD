@@ -36,7 +36,6 @@ envoy_cc_library(
     repository = "@envoy",
     deps = [
         ":echo2_lib",
-        "@envoy//include/envoy/network:connection_interface",
         "@envoy//source/server:configuration_lib",
     ],
 )
