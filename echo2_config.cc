@@ -1,7 +1,9 @@
 #include <string>
 
 #include "echo2.h"
-#include "server/configuration_impl.h"
+
+#include "envoy/registry/registry.h"
+#include "envoy/server/filter_config.h"
 
 namespace Envoy {
 namespace Server {
@@ -23,9 +25,9 @@ public:
 };
 
 /**
- * Static registration for the echo2 filter. @see RegisterNamedNetworkFilterConfigFactory.
+ * Static registration for the echo2 filter. @see RegisterFactory.
  */
-static RegisterNamedNetworkFilterConfigFactory<Echo2ConfigFactory> registered_;
+static Registry::RegisterFactory<Echo2ConfigFactory, NamedNetworkFilterConfigFactory> registered_;
 
 } // Configuration
 } // Server
