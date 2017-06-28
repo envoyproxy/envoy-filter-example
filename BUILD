@@ -12,7 +12,7 @@ envoy_cc_binary(
     repository = "@envoy",
     deps = [
         ":echo2_config",
-        "@envoy//source/exe:envoy_main_lib",
+        "@envoy//source/exe:envoy_main_entry_lib",
     ],
 )
 
