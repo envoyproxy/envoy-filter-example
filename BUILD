@@ -52,3 +52,9 @@ envoy_cc_test(
         "@envoy//test/integration:integration_lib"
     ],
 )
+
+sh_test(
+    name = "envoy_binary_test",
+    srcs = ["envoy_binary_test.sh"],
+    data = [":envoy"],
+)
