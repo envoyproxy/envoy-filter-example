@@ -11,16 +11,27 @@ envoy_cc_binary(
     name = "envoy",
     repository = "@envoy",
     deps = [
+        ":http_filter_config",
         "@envoy//source/exe:envoy_main_entry_lib",
-        ":http_filter_lib",
     ],
 )
 
 envoy_cc_library(
     name = "http_filter_lib",
     srcs = ["http_filter.cc"],
+    hdrs = ["http_filter.h"],
     repository = "@envoy",
     deps = [
+        "@envoy//source/exe:envoy_common_lib",
+    ],
+)
+
+envoy_cc_library(
+    name = "http_filter_config",
+    srcs = ["http_filter_config.cc"],
+    repository = "@envoy",
+    deps = [
+        ":http_filter_lib",
         "@envoy//source/exe:envoy_common_lib",
     ],
 )
@@ -28,10 +39,10 @@ envoy_cc_library(
 envoy_cc_test(
     name = "http_filter_integration_test",
     srcs = ["http_filter_integration_test.cc"],
-    data =  ["//http-filter-example:envoy.conf"],
+    data = ["//http-filter-example:envoy.conf"],
     repository = "@envoy",
     deps = [
-        ":http_filter_lib",
+        ":http_filter_config",
         "@envoy//test/integration:integration_lib",
     ],
 )

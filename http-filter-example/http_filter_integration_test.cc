@@ -21,7 +21,6 @@ public:
   void TearDown() override {
     test_server_.reset();
     fake_upstreams_.clear();
-
   }
 };
 
@@ -29,8 +28,7 @@ INSTANTIATE_TEST_CASE_P(IpVersions, HttpFilterSampleIntegrationTest,
                         testing::ValuesIn(TestEnvironment::getIpVersionsForTest()));
 
 TEST_P(HttpFilterSampleIntegrationTest, Test1) {
-  Http::TestHeaderMapImpl headers{
-      {":method", "GET"}, {":path", "/"}, {":authority", "host"} };
+  Http::TestHeaderMapImpl headers{{":method", "GET"}, {":path", "/"}, {":authority", "host"}};
 
   IntegrationCodecClientPtr codec_client;
   FakeHttpConnectionPtr fake_upstream_connection;
@@ -44,8 +42,9 @@ TEST_P(HttpFilterSampleIntegrationTest, Test1) {
   request_stream->waitForEndStream(*dispatcher_);
   response->waitForEndStream();
 
-  EXPECT_EQ(std::string("sample-filter"),
-            std::string(request_stream->headers().get(Http::LowerCaseString("via"))->value().c_str()));
+  EXPECT_EQ(
+      std::string("sample-filter"),
+      std::string(request_stream->headers().get(Http::LowerCaseString("via"))->value().c_str()));
 
   codec_client->close();
 }
