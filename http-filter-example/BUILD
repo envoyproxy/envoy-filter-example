@@ -18,7 +18,7 @@ envoy_cc_binary(
 
 envoy_cc_library(
     name = "http_filter_lib",
-    srcs = ["test_filter.cc"],
+    srcs = ["http_filter.cc"],
     repository = "@envoy",
     deps = [
         "@envoy//source/exe:envoy_common_lib",

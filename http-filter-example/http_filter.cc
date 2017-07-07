@@ -11,7 +11,7 @@
 
 namespace Envoy{
 namespace Http{
-namespace TestFilter{
+namespace SampleFilter{
 
 class Config {
  public:
@@ -20,7 +20,7 @@ class Config {
 typedef std::shared_ptr<Config> ConfigPtr;
 
 const LowerCaseString headerKey = LowerCaseString("via");
-const std::string headerValue = "test-filter";
+const std::string headerValue = "sample-filter";
 
 class Instance : public Http::StreamDecoderFilter {
  public:
@@ -53,13 +53,13 @@ class Instance : public Http::StreamDecoderFilter {
   ConfigPtr config_;
 };
 
-} // TestFilter
+} // SampleFilter
 } // Http
 
 namespace Server{
 namespace Configuration {
 
-class TestFilterConfig : public HttpFilterConfigFactory {
+class SampleFilterConfig : public HttpFilterConfigFactory {
  public:
   HttpFilterFactoryCb tryCreateFilterFactory(
         HttpFilterType type,
@@ -67,20 +67,20 @@ class TestFilterConfig : public HttpFilterConfigFactory {
         const Json::Object& config,
         const std::string&,
         Server::Instance&) override {
-    if (type != HttpFilterType::Decoder || name != "test")
+    if (type != HttpFilterType::Decoder || name != "sample")
       return nullptr;
 
-    Http::TestFilter::ConfigPtr test_config(
-        new Http::TestFilter::Config(config));
+    Http::SampleFilter::ConfigPtr sample_config(
+        new Http::SampleFilter::Config(config));
 
-    return [test_config](Http::FilterChainFactoryCallbacks& callbacks) -> void {
+    return [sample_config](Http::FilterChainFactoryCallbacks& callbacks) -> void {
         callbacks.addStreamDecoderFilter(
-            Http::StreamDecoderFilterSharedPtr{new Http::TestFilter::Instance(test_config)});
+            Http::StreamDecoderFilterSharedPtr{new Http::SampleFilter::Instance(sample_config)});
     };
   }
 };
 
-static RegisterHttpFilterConfigFactory<TestFilterConfig> register_;
+static RegisterHttpFilterConfigFactory<SampleFilterConfig> register_;
 
 } // Configuration
 } // Server

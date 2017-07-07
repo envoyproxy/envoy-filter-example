@@ -44,7 +44,7 @@ TEST_P(HttpFilterSampleIntegrationTest, Test1) {
   request_stream->waitForEndStream(*dispatcher_);
   response->waitForEndStream();
 
-  EXPECT_EQ(std::string("test-filter"),
+  EXPECT_EQ(std::string("sample-filter"),
             std::string(request_stream->headers().get(Http::LowerCaseString("via"))->value().c_str()));
 
   codec_client->close();
