@@ -20,4 +20,4 @@ To run the `sample` integration test:
 
 ## How it works
 
-See the [network filter example](README.md#how-it-works).
+See the [network filter example](../README.md#how-it-works).
