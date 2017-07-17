@@ -7,6 +7,9 @@
 namespace Envoy {
 namespace Http {
 
+const LowerCaseString HttpSampleDecoderFilter::headerKey = LowerCaseString("via");
+const std::string HttpSampleDecoderFilter::headerValue = "sample-filter";
+
 HttpSampleDecoderFilter::HttpSampleDecoderFilter() {}
 
 HttpSampleDecoderFilter::~HttpSampleDecoderFilter() {}

@@ -1,12 +1,11 @@
+#pragma once
+
 #include <string>
 
 #include "server/config/network/http_connection_manager.h"
 
 namespace Envoy {
 namespace Http {
-
-const LowerCaseString headerKey = LowerCaseString("via");
-const std::string headerValue = "sample-filter";
 
 class HttpSampleDecoderFilter : public Http::StreamDecoderFilter {
 public:
@@ -24,6 +23,9 @@ public:
 
 private:
   StreamDecoderFilterCallbacks* decoder_callbacks_;
+
+  static const LowerCaseString headerKey;
+  static const std::string headerValue;
 };
 
 } // Http
