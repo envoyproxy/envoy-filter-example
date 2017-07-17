@@ -7,7 +7,7 @@
 namespace Envoy {
 namespace Http {
 
-class HttpSampleDecoderFilter : public Http::StreamDecoderFilter {
+class HttpSampleDecoderFilter : public StreamDecoderFilter {
 public:
   HttpSampleDecoderFilter();
   ~HttpSampleDecoderFilter();
