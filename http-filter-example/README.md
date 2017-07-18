@@ -26,12 +26,12 @@ See the [network filter example](../README.md#how-it-works).
 
 - The main task is to write a class 
  that implements the interface `Envoy::Http::StreamDecoderFilter`,
- as in [http_filter.h](http_filter.h) and [http_filter.cc](http_filter.cc),
+ as in [`http_filter.h`](http_filter.h) and [`http_filter.cc`](http_filter.cc),
  which contains functions that handle http headers, data, and trailers.
 - You also need a class that implements 
  `Envoy::Server::Configuration::NamedHttpFilterConfigFactory`
  to enable the Envoy binary to find your filter,
- as in [http_filter_config.cc](http_filter_config.cc).
+ as in [`http_filter_config.cc`](http_filter_config.cc).
 - Finally, you need to modify the [Envoy config file](envoy.conf#L33-L37)
  to add your filter to Envoy.
  
