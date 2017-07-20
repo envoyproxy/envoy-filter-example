@@ -22,7 +22,7 @@ public:
 };
 
 /**
- * Static registration for the ip tagging filter. @see RegisterFactory.
+ * Static registration for this sample filter. @see RegisterFactory.
  */
 static Registry::RegisterFactory<HttpSampleDecoderFilterConfig, NamedHttpFilterConfigFactory>
     register_;
