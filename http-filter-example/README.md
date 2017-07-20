@@ -1,7 +1,7 @@
 # Envoy filter example
 
-This project demonstrates the linking of additional http filters with the Envoy binary.
-A new filter `sample` which adds a http header is introduced.
+This project demonstrates the linking of additional HTTP filters with the Envoy binary.
+A new filter `sample` which adds a HTTP header is introduced.
 Integration tests demonstrating the filter's end-to-end behavior are
 also provided.
 
@@ -22,7 +22,7 @@ To run the `sample` integration test:
 
 See the [network filter example](../README.md#how-it-works).
 
-## How to custom it
+## How to write an HTTP filter
 
 - The main task is to write a class 
  that implements the interface `Envoy::Http::StreamDecoderFilter`,
@@ -32,7 +32,8 @@ See the [network filter example](../README.md#how-it-works).
  `Envoy::Server::Configuration::NamedHttpFilterConfigFactory`
  to enable the Envoy binary to find your filter,
  as in [`http_filter_config.cc`](http_filter_config.cc).
+ It should be linked to the Envoy binary by modifying [`BUILD`](BUILD#L14) file.  
 - Finally, you need to modify the [Envoy config file](envoy.conf#L33-L37)
- to add your filter to Envoy.
+ to add your filter to the filter chain for a particular HTTP route configuration.
  
 
