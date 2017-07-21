@@ -6,6 +6,8 @@ A new filter `echo2` is introduced, identical modulo renaming to the existing
 filter. Integration tests demonstrating the filter's end-to-end behavior are
 also provided.
 
+For an example of additional HTTP filters, see [here](http-filter-example).
+
 ## Building
 
 To build the Envoy static binary:
