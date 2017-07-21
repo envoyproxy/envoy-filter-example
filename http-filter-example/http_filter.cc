@@ -7,18 +7,25 @@
 namespace Envoy {
 namespace Http {
 
-const LowerCaseString HttpSampleDecoderFilter::headerKey = LowerCaseString("via");
-const std::string HttpSampleDecoderFilter::headerValue = "sample-filter";
-
 HttpSampleDecoderFilter::HttpSampleDecoderFilter() {}
 
 HttpSampleDecoderFilter::~HttpSampleDecoderFilter() {}
 
 void HttpSampleDecoderFilter::onDestroy() {}
 
+LowerCaseString& HttpSampleDecoderFilter::headerKey() {
+  static LowerCaseString* key = new LowerCaseString("via");
+  return *key;
+}
+
+std::string& HttpSampleDecoderFilter::headerValue() {
+  static std::string* val = new std::string("sample-filter");
+  return *val;
+}
+
 FilterHeadersStatus HttpSampleDecoderFilter::decodeHeaders(HeaderMap& headers, bool) {
   // add a header
-  headers.addStatic(headerKey, headerValue);
+  headers.addStatic(headerKey(), headerValue());
 
   return FilterHeadersStatus::Continue;
 }

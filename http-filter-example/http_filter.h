@@ -24,8 +24,8 @@ public:
 private:
   StreamDecoderFilterCallbacks* decoder_callbacks_;
 
-  static const LowerCaseString headerKey;
-  static const std::string headerValue;
+  LowerCaseString& headerKey();
+  std::string& headerValue();
 };
 
 } // Http
