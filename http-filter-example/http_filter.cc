@@ -13,12 +13,12 @@ HttpSampleDecoderFilter::~HttpSampleDecoderFilter() {}
 
 void HttpSampleDecoderFilter::onDestroy() {}
 
-LowerCaseString& HttpSampleDecoderFilter::headerKey() {
+const LowerCaseString& HttpSampleDecoderFilter::headerKey() {
   static LowerCaseString* key = new LowerCaseString("via");
   return *key;
 }
 
-std::string& HttpSampleDecoderFilter::headerValue() {
+const std::string& HttpSampleDecoderFilter::headerValue() {
   static std::string* val = new std::string("sample-filter");
   return *val;
 }
