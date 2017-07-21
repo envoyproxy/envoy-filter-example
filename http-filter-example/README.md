@@ -25,9 +25,16 @@ See the [network filter example](../README.md#how-it-works).
 ## How to write an HTTP filter
 
 - The main task is to write a class 
- that implements the interface `Envoy::Http::StreamDecoderFilter`,
+ that implements the interface 
+ [`Envoy::Http::StreamDecoderFilter`](https://github.com/lyft/envoy/blob/master/include/envoy/http/filter.h#218),
  as in [`http_filter.h`](http_filter.h) and [`http_filter.cc`](http_filter.cc),
  which contains functions that handle http headers, data, and trailers.
+ Note that this is an example of decoder filters, 
+ and to write encoder filters or decoder/encoder filters
+ you need to implement 
+ [`Envoy::Http::StreamEncoderFilter`](https://github.com/lyft/envoy/blob/master/include/envoy/http/filter.h#L298) 
+ or [`Envoy::Http::StreamFilter`](https://github.com/lyft/envoy/blob/master/include/envoy/http/filter.h#L334)
+ instead.
 - You also need a class that implements 
  `Envoy::Server::Configuration::NamedHttpFilterConfigFactory`
  to enable the Envoy binary to find your filter,
