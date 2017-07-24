@@ -39,7 +39,7 @@ envoy_cc_library(
 envoy_cc_test(
     name = "http_filter_integration_test",
     srcs = ["http_filter_integration_test.cc"],
-    data = ["//http-filter-example:envoy.conf"],
+    data = [":envoy.conf"],
     repository = "@envoy",
     deps = [
         ":http_filter_config",
