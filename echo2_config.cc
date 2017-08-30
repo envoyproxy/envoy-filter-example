@@ -21,7 +21,6 @@ public:
   }
 
   std::string name() override { return "echo2"; }
-  NetworkFilterType type() override { return NetworkFilterType::Read; }
 };
 
 /**
