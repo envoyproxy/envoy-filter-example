@@ -23,7 +23,7 @@ To run the `echo2` integration test:
 
 To run the regular Envoy tests from this project:
 
-`bazel test @envoy//...`
+`bazel test @envoy//test/...`
 
 ## How it works
 
