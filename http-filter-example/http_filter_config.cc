@@ -18,7 +18,6 @@ public:
     };
   }
   std::string name() override { return "sample"; }
-  HttpFilterType type() override { return HttpFilterType::Decoder; }
 };
 
 /**
