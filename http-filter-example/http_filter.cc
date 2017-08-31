@@ -25,7 +25,7 @@ const std::string& HttpSampleDecoderFilter::headerValue() {
 
 FilterHeadersStatus HttpSampleDecoderFilter::decodeHeaders(HeaderMap& headers, bool) {
   // add a header
-  headers.addStatic(headerKey(), headerValue());
+  headers.addReference(headerKey(), headerValue());
 
   return FilterHeadersStatus::Continue;
 }
