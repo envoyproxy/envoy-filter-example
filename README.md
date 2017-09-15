@@ -2,7 +2,7 @@
 
 This project demonstrates the linking of additional filters with the Envoy binary.
 A new filter `echo2` is introduced, identical modulo renaming to the existing
-[`echo`](https://github.com/lyft/envoy/blob/master/source/common/filter/echo.h)
+[`echo`](https://github.com/envoyproxy/envoy/blob/master/source/common/filter/echo.h)
 filter. Integration tests demonstrating the filter's end-to-end behavior are
 also provided.
 
@@ -27,7 +27,7 @@ To run the regular Envoy tests from this project:
 
 ## How it works
 
-The [Envoy repository](https://github.com/lyft/envoy/) is provided as a submodule.
+The [Envoy repository](https://github.com/envoyproxy/envoy/) is provided as a submodule.
 The [`WORKSPACE`](WORKSPACE) file maps the `@envoy` repository to this local path.
 
 The [`BUILD`](BUILD) file introduces a new Envoy static binary target, `envoy`,
