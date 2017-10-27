@@ -8,7 +8,7 @@ local_repository(
 load("@envoy//bazel:repositories.bzl", "envoy_dependencies")
 load("@envoy//bazel:cc_configure.bzl", "cc_configure")
 
-envoy_dependencies()
+envoy_dependencies(repository="@envoy")
 
 cc_configure()
 
