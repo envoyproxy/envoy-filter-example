@@ -1,11 +1,11 @@
-#include "test/integration/integration.h"
+#include "test/integration/http_integration.h"
 #include "test/integration/utility.h"
 
 namespace Envoy {
-class HttpFilterSampleIntegrationTest : public BaseIntegrationTest,
+class HttpFilterSampleIntegrationTest : public HttpIntegrationTest,
                                         public testing::TestWithParam<Network::Address::IpVersion> {
 public:
-  HttpFilterSampleIntegrationTest() : BaseIntegrationTest(GetParam()) {}
+  HttpFilterSampleIntegrationTest() : HttpIntegrationTest(Http::CodecClient::Type::HTTP1, GetParam()) {}
   /**
    * Initializer for an individual integration test.
    */
@@ -35,10 +35,10 @@ TEST_P(HttpFilterSampleIntegrationTest, Test1) {
   IntegrationStreamDecoderPtr response(new IntegrationStreamDecoder(*dispatcher_));
   FakeStreamPtr request_stream;
 
-  codec_client = makeHttpConnection(lookupPort("http"), Http::CodecClient::Type::HTTP1);
+  codec_client = makeHttpConnection(lookupPort("http"));
   codec_client->makeHeaderOnlyRequest(headers, *response);
   fake_upstream_connection = fake_upstreams_[0]->waitForHttpConnection(*dispatcher_);
-  request_stream = fake_upstream_connection->waitForNewStream();
+  request_stream = fake_upstream_connection->waitForNewStream(*dispatcher_);
   request_stream->waitForEndStream(*dispatcher_);
   response->waitForEndStream();
 
