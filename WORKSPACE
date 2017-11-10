@@ -1,4 +1,4 @@
-workspace(name = "envoy")
+workspace(name = "envoy_filter_example")
 
 local_repository(
     name = "envoy",
@@ -8,7 +8,7 @@ local_repository(
 load("@envoy//bazel:repositories.bzl", "envoy_dependencies")
 load("@envoy//bazel:cc_configure.bzl", "cc_configure")
 
-envoy_dependencies(repository="@envoy")
+envoy_dependencies()
 
 cc_configure()
 
