@@ -2,6 +2,7 @@
 
 #include "http_filter.h"
 
+#include "common/protobuf/utility.h"
 #include "envoy/registry/registry.h"
 
 namespace Envoy {
@@ -17,6 +18,23 @@ public:
           Http::StreamDecoderFilterSharedPtr{new Http::HttpSampleDecoderFilter()});
     };
   }
+
+  HttpFilterFactoryCb createFilterFactoryFromProto(const Protobuf::Message& config,
+                                                   const std::string&,
+                                                   FactoryContext&) override {
+    return [](Http::FilterChainFactoryCallbacks& callbacks) -> void {
+      callbacks.addStreamDecoderFilter(
+          Http::StreamDecoderFilterSharedPtr{new Http::HttpSampleDecoderFilter()});
+    };
+  }
+
+  /**
+   *  Return the Protobuf Message that represents your config incase you have config proto
+   */
+  ProtobufTypes::MessagePtr createEmptyConfigProto() override {
+    return ProtobufTypes::MessagePtr{new Envoy::ProtobufWkt::Empty()}; 
+  }
+
   std::string name() override { return "sample"; }
 };
 
