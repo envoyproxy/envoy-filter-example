@@ -24,10 +24,10 @@ public:
   }
 };
 
-INSTANTIATE_TEST_CASE_P(IpVersions, HttpFilterSampleIntegrationTest,
+INSTANTIATE_TEST_CASE_P(IpVersions, HttpFilterSamplev2IntegrationTest,
                         testing::ValuesIn(TestEnvironment::getIpVersionsForTest()));
 
-TEST_P(HttpFilterSampleIntegrationTest, Test1) {
+TEST_P(HttpFilterSamplev2IntegrationTest, Test1) {
   Http::TestHeaderMapImpl headers{{":method", "GET"}, {":path", "/"}, {":authority", "host"}};
 
   IntegrationCodecClientPtr codec_client;

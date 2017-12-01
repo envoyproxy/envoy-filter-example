@@ -19,7 +19,7 @@ public:
     };
   }
 
-  HttpFilterFactoryCb createFilterFactoryFromProto(const Protobuf::Message& config,
+  HttpFilterFactoryCb createFilterFactoryFromProto(const Protobuf::Message&,
                                                    const std::string&,
                                                    FactoryContext&) override {
     return [](Http::FilterChainFactoryCallbacks& callbacks) -> void {

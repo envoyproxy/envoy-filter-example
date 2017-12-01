@@ -46,3 +46,14 @@ envoy_cc_test(
         "@envoy//test/integration:http_integration_lib"
     ],
 )
+
+envoy_cc_test(
+    name = "http_filter_v2_integration_test",
+    srcs = ["http_filter_v2_integration_test.cc"],
+    data = [":envoy-v2.yaml"],
+    repository = "@envoy",
+    deps = [
+        ":http_filter_config",
+        "@envoy//test/integration:http_integration_lib"
+    ],
+)
