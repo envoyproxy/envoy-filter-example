@@ -54,7 +54,7 @@ envoy_cc_test(
     srcs = ["http_filter_v2_integration_test.cc"],
     data = [":envoy-v2.yaml"],
     repository = "@envoy",
-    external_deps = ["envoy_eds"
+    external_deps = ["envoy_filter_http_http_connection_manager"
     ],
     deps = [
         ":http_filter_config",
