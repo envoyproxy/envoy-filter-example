@@ -59,9 +59,5 @@ envoy_cc_test(
     deps = [
         ":http_filter_config",
         "@envoy//test/integration:http_integration_lib",
-        "@envoy//source/server/config/network:http_connection_manager_lib",
-        "@envoy//source/common/config:bootstrap_json_lib",
-        "@envoy//source/common/config:well_known_names",
-        "@envoy//source/common/protobuf",
     ],
 )

@@ -29,14 +29,23 @@ public:
   void initialize() override {
     config_helper_.addFilter(
         "{ name: sample, config: {} }");
+    config_helper_.addConfigModifier([](envoy::api::v2::Bootstrap& bootstrap) {
+      auto* sample_cluster = bootstrap.mutable_static_resources()->add_clusters();
+      sample_cluster->MergeFrom(bootstrap.static_resources().clusters()[0]);
+      sample_cluster->set_name("service1");
+      sample_cluster->mutable_http2_protocol_options();
+    });
     config_helper_.addConfigModifier(
         [](envoy::api::v2::filter::http::HttpConnectionManager& hcm) {
           hcm.mutable_route_config()
                                  ->mutable_virtual_hosts(0)
                                  ->mutable_routes(0)
                                  ->mutable_route();
+                               
+        // sample->add_actions()->mutable_destination_cluster();
         });
     named_ports_ = {"http"};
+    config_helper_.bootstrap().PrintDebugString();
     HttpIntegrationTest::initialize();
   }
 
