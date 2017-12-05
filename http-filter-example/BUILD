@@ -1,13 +1,11 @@
-#package(default_visibility = ["//visibility:public"])
+package(default_visibility = ["//visibility:public"])
 
 load(
     "@envoy//bazel:envoy_build_system.bzl",
     "envoy_cc_binary",
     "envoy_cc_library",
     "envoy_cc_test",
-    "envoy_package",
-)
-envoy_package()
+ )
 
 envoy_cc_binary(
     name = "envoy",
@@ -39,23 +37,10 @@ envoy_cc_library(
 )
 
 envoy_cc_test(
-    name = "http_filter_integration_test",
-    srcs = ["http_filter_integration_test.cc"],
-    data = [":envoy.conf"],
-    repository = "@envoy",
-    deps = [
-        ":http_filter_config",
-        "@envoy//test/integration:http_integration_lib"
-    ],
-)
-
-envoy_cc_test(
     name = "http_filter_v2_integration_test",
     srcs = ["http_filter_v2_integration_test.cc"],
-    data = [":envoy-v2.yaml"],
     repository = "@envoy",
-    external_deps = ["envoy_filter_http_http_connection_manager"
-    ],
+    external_deps = ["envoy_filter_network_http_connection_manager"],
     deps = [
         ":http_filter_config",
         "@envoy//test/integration:http_integration_lib",

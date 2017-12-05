@@ -1,6 +1,6 @@
 #include "common/grpc/codec.h"
 #include "common/grpc/common.h"
-#include "api/filter/http/http_connection_manager.pb.h"
+#include "api/filter/network/http_connection_manager.pb.h"
 
 #include "test/integration/http_integration.h"
 #include "test/integration/utility.h"
@@ -36,16 +36,14 @@ public:
       sample_cluster->mutable_http2_protocol_options();
     });
     config_helper_.addConfigModifier(
-        [](envoy::api::v2::filter::http::HttpConnectionManager& hcm) {
+        [](envoy::api::v2::filter::network::HttpConnectionManager &hcm) {
           hcm.mutable_route_config()
-                                 ->mutable_virtual_hosts(0)
-                                 ->mutable_routes(0)
-                                 ->mutable_route();
-                               
-        // sample->add_actions()->mutable_destination_cluster();
+              ->mutable_virtual_hosts(0)
+              ->mutable_routes(0)
+              ->mutable_route();
+
         });
     named_ports_ = {"http"};
-    config_helper_.bootstrap().PrintDebugString();
     HttpIntegrationTest::initialize();
   }
 
