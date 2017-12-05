@@ -5,7 +5,7 @@ load(
     "envoy_cc_binary",
     "envoy_cc_library",
     "envoy_cc_test",
- )
+)
 
 envoy_cc_binary(
     name = "envoy",
