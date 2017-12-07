@@ -18,31 +18,11 @@ public:
     initialize();
   }
 
-  void createUpstreams() override {
-    HttpIntegrationTest::createUpstreams();
-    fake_upstreams_.emplace_back(new FakeUpstream(0, FakeHttpConnection::Type::HTTP2, version_));
-    ports_.push_back(fake_upstreams_.back()->localAddress()->ip()->port());
-  }
-
-  void initialize() override {
+  void initialize() override
+  {
     config_helper_.addFilter(
         "{ name: sample, config: {} }");
-
-    config_helper_.addConfigModifier([](envoy::api::v2::Bootstrap &bootstrap) {
-      auto *sample_cluster = bootstrap.mutable_static_resources()->add_clusters();
-      sample_cluster->MergeFrom(bootstrap.static_resources().clusters()[0]);
-      sample_cluster->set_name("service1");
-      sample_cluster->mutable_http2_protocol_options();
-    });
     HttpIntegrationTest::initialize();
-  }
-
-
-  void cleanup() {
-    if (fake_upstream_connection_ != nullptr) {
-      fake_upstream_connection_->close();
-      fake_upstream_connection_->waitForDisconnect();
-    }
   }
 };
 
