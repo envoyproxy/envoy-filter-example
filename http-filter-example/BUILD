@@ -37,8 +37,8 @@ envoy_cc_library(
 )
 
 envoy_cc_test(
-    name = "http_filter_v2_integration_test",
-    srcs = ["http_filter_v2_integration_test.cc"],
+    name = "http_filter_integration_test",
+    srcs = ["http_filter_integration_test.cc"],
     repository = "@envoy",
     external_deps = ["envoy_filter_network_http_connection_manager"],
     deps = [

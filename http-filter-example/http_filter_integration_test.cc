@@ -5,17 +5,15 @@
 #include "test/integration/http_integration.h"
 #include "test/integration/utility.h"
 
-#include "gtest/gtest.h"
-
 namespace Envoy {
-class HttpFilterSamplev2IntegrationTest : public HttpIntegrationTest,
+class HttpFilterSampleIntegrationTest : public HttpIntegrationTest,
                                         public testing::TestWithParam<Network::Address::IpVersion> {
 public:
-  HttpFilterSamplev2IntegrationTest() : HttpIntegrationTest(Http::CodecClient::Type::HTTP1, GetParam()) {}
+  HttpFilterSampleIntegrationTest() : HttpIntegrationTest(Http::CodecClient::Type::HTTP1, GetParam()) {}
   /**
    * Initializer for an individual integration test.
    */
- void SetUp() override {
+  void SetUp() override {
     HttpIntegrationTest::SetUp();
     initialize();
   }
@@ -29,21 +27,13 @@ public:
   void initialize() override {
     config_helper_.addFilter(
         "{ name: sample, config: {} }");
-    config_helper_.addConfigModifier([](envoy::api::v2::Bootstrap& bootstrap) {
-      auto* sample_cluster = bootstrap.mutable_static_resources()->add_clusters();
+
+    config_helper_.addConfigModifier([](envoy::api::v2::Bootstrap &bootstrap) {
+      auto *sample_cluster = bootstrap.mutable_static_resources()->add_clusters();
       sample_cluster->MergeFrom(bootstrap.static_resources().clusters()[0]);
       sample_cluster->set_name("service1");
       sample_cluster->mutable_http2_protocol_options();
     });
-    config_helper_.addConfigModifier(
-        [](envoy::api::v2::filter::network::HttpConnectionManager &hcm) {
-          hcm.mutable_route_config()
-              ->mutable_virtual_hosts(0)
-              ->mutable_routes(0)
-              ->mutable_route();
-
-        });
-    named_ports_ = {"http"};
     HttpIntegrationTest::initialize();
   }
 
@@ -56,10 +46,10 @@ public:
   }
 };
 
-INSTANTIATE_TEST_CASE_P(IpVersions, HttpFilterSamplev2IntegrationTest,
+INSTANTIATE_TEST_CASE_P(IpVersions, HttpFilterSampleIntegrationTest,
                         testing::ValuesIn(TestEnvironment::getIpVersionsForTest()));
 
-TEST_P(HttpFilterSamplev2IntegrationTest, Test1) {
+TEST_P(HttpFilterSampleIntegrationTest, Test1) {
   Http::TestHeaderMapImpl headers{{":method", "GET"}, {":path", "/"}, {":authority", "host"}};
 
   IntegrationCodecClientPtr codec_client;
