@@ -1,3 +1,7 @@
+#include "common/grpc/codec.h"
+#include "common/grpc/common.h"
+#include "api/filter/network/http_connection_manager.pb.h"
+
 #include "test/integration/http_integration.h"
 #include "test/integration/utility.h"
 
@@ -10,17 +14,15 @@ public:
    * Initializer for an individual integration test.
    */
   void SetUp() override {
-    fake_upstreams_.emplace_back(new FakeUpstream(0, FakeHttpConnection::Type::HTTP1, version_));
-    registerPort("upstream_0", fake_upstreams_.back()->localAddress()->ip()->port());
-    createTestServer("http-filter-example/envoy.conf", {"http"});
+    HttpIntegrationTest::SetUp();
+    initialize();
   }
 
-  /**
-   * Destructor for an individual integration test.
-   */
-  void TearDown() override {
-    test_server_.reset();
-    fake_upstreams_.clear();
+  void initialize() override
+  {
+    config_helper_.addFilter(
+        "{ name: sample, config: {} }");
+    HttpIntegrationTest::initialize();
   }
 };
 
