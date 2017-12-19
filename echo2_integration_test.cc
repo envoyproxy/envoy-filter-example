@@ -4,13 +4,37 @@
 namespace Envoy {
 class Echo2IntegrationTest : public BaseIntegrationTest,
                              public testing::TestWithParam<Network::Address::IpVersion> {
+
+// TODO(alyssawilk): make this a general util.
+std::string readFileToStringForTest(const std::string& filename) {
+  std::ifstream file(filename);
+  if (file.fail()) {
+    std::cerr << "failed to open: " << filename << std::endl;
+    RELEASE_ASSERT(false);
+  }
+
+  std::stringstream file_string_stream;
+  file_string_stream << file.rdbuf();
+  return file_string_stream.str();
+}
+
+std::string echoConfig() {
+  return readFileToStringForTest(TestEnvironment::runfilesPath("echo2_server.yaml");
+}
+
 public:
-  Echo2IntegrationTest() : BaseIntegrationTest(GetParam()) {}
+  Echo2IntegrationTest() : BaseIntegrationTest(GetParam(), echoConfig()) {}
+
+  // Called once by the gtest framework before any EchoIntegrationTests are run.
+  static void SetUpTestCase() {
+  }
+
   /**
    * Initializer for an individual integration test.
    */
   void SetUp() override {
-    createTestServer("echo2_server.json", {"echo"});
+    named_ports_ = {{"echo"}};
+    BaseIntegrationTest::initialize();
   }
 
   /**
@@ -18,6 +42,7 @@ public:
    */
   void TearDown() override {
     test_server_.reset();
+    fake_upstreams_.clear();
   }
 };
 
