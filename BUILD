@@ -45,7 +45,7 @@ envoy_cc_library(
 envoy_cc_test(
     name = "echo2_integration_test",
     srcs = ["echo2_integration_test.cc"],
-    data =  ["echo2_server.json"],
+    data =  ["echo2_server.yaml"],
     repository = "@envoy",
     deps = [
         ":echo2_config",

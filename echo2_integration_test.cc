@@ -4,13 +4,20 @@
 namespace Envoy {
 class Echo2IntegrationTest : public BaseIntegrationTest,
                              public testing::TestWithParam<Network::Address::IpVersion> {
+
+std::string echoConfig() {
+  return TestEnvironment::readFileToStringForTest(TestEnvironment::runfilesPath(
+      "echo2_server.yaml"));
+}
+
 public:
-  Echo2IntegrationTest() : BaseIntegrationTest(GetParam()) {}
+  Echo2IntegrationTest() : BaseIntegrationTest(GetParam(), echoConfig()) {}
   /**
    * Initializer for an individual integration test.
    */
   void SetUp() override {
-    createTestServer("echo2_server.json", {"echo"});
+    named_ports_ = {{"echo"}};
+    BaseIntegrationTest::initialize();
   }
 
   /**
@@ -18,6 +25,7 @@ public:
    */
   void TearDown() override {
     test_server_.reset();
+    fake_upstreams_.clear();
   }
 };
 
