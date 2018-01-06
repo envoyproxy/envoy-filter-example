@@ -7,19 +7,24 @@
 namespace Envoy {
 namespace Http {
 
-HttpSampleDecoderFilter::HttpSampleDecoderFilter() {}
+HttpSampleDecoderFilterConfig::HttpSampleDecoderFilterConfig(
+    const sample::Decoder& proto_config)
+    : key_(proto_config.key()), val_(proto_config.val()) {}
+
+HttpSampleDecoderFilter::HttpSampleDecoderFilter(HttpSampleDecoderFilterConfigSharedPtr config)
+    : config_(config) {}
 
 HttpSampleDecoderFilter::~HttpSampleDecoderFilter() {}
 
 void HttpSampleDecoderFilter::onDestroy() {}
 
 const LowerCaseString& HttpSampleDecoderFilter::headerKey() {
-  static LowerCaseString* key = new LowerCaseString("via");
+  static LowerCaseString* key = new LowerCaseString(config_->key());
   return *key;
 }
 
 const std::string& HttpSampleDecoderFilter::headerValue() {
-  static std::string* val = new std::string("sample-filter");
+  static std::string* val = new std::string(config_->val());
   return *val;
 }
 
@@ -42,5 +47,5 @@ void HttpSampleDecoderFilter::setDecoderFilterCallbacks(StreamDecoderFilterCallb
   decoder_callbacks_ = &callbacks;
 }
 
-} // Http
-} // Envoy
+} // namespace Http
+} // namespace Envoy

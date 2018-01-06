@@ -1,7 +1,3 @@
-#include "common/grpc/codec.h"
-#include "common/grpc/common.h"
-#include "api/filter/network/http_connection_manager.pb.h"
-
 #include "test/integration/http_integration.h"
 #include "test/integration/utility.h"
 
@@ -9,19 +5,15 @@ namespace Envoy {
 class HttpFilterSampleIntegrationTest : public HttpIntegrationTest,
                                         public testing::TestWithParam<Network::Address::IpVersion> {
 public:
-  HttpFilterSampleIntegrationTest() : HttpIntegrationTest(Http::CodecClient::Type::HTTP1, GetParam()) {}
+  HttpFilterSampleIntegrationTest()
+      : HttpIntegrationTest(Http::CodecClient::Type::HTTP1, GetParam()) {}
   /**
    * Initializer for an individual integration test.
    */
-  void SetUp() override {
-    HttpIntegrationTest::SetUp();
-    initialize();
-  }
+  void SetUp() override { initialize(); }
 
-  void initialize() override
-  {
-    config_helper_.addFilter(
-        "{ name: sample, config: {} }");
+  void initialize() override {
+    config_helper_.addFilter("{ name: sample, config: { key: via, val: sample-filter } }");
     HttpIntegrationTest::initialize();
   }
 };
@@ -49,4 +41,4 @@ TEST_P(HttpFilterSampleIntegrationTest, Test1) {
 
   codec_client->close();
 }
-} // Envoy
+} // namespace Envoy
