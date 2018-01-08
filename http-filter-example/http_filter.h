@@ -13,12 +13,12 @@ class HttpSampleDecoderFilterConfig {
 public:
   HttpSampleDecoderFilterConfig(const sample::Decoder& proto_config);
 
-  const std::string& key() { return key_; }
-  const std::string& val() { return val_; }
+  const std::string& key() const { return key_; }
+  const std::string& val() const { return val_; }
 
 private:
-  std::string key_;
-  std::string val_;
+  const std::string key_;
+  const std::string val_;
 };
 
 typedef std::shared_ptr<HttpSampleDecoderFilterConfig> HttpSampleDecoderFilterConfigSharedPtr;
