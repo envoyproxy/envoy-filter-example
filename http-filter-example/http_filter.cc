@@ -18,19 +18,17 @@ HttpSampleDecoderFilter::~HttpSampleDecoderFilter() {}
 
 void HttpSampleDecoderFilter::onDestroy() {}
 
-const LowerCaseString& HttpSampleDecoderFilter::headerKey() {
-  static LowerCaseString* key = new LowerCaseString(config_->key());
-  return *key;
+const LowerCaseString HttpSampleDecoderFilter::headerKey() const {
+  return LowerCaseString(config_->key());
 }
 
-const std::string& HttpSampleDecoderFilter::headerValue() {
-  static std::string* val = new std::string(config_->val());
-  return *val;
+const std::string HttpSampleDecoderFilter::headerValue() const {
+  return config_->val();
 }
 
 FilterHeadersStatus HttpSampleDecoderFilter::decodeHeaders(HeaderMap& headers, bool) {
   // add a header
-  headers.addReference(headerKey(), headerValue());
+  headers.addCopy(headerKey(), headerValue());
 
   return FilterHeadersStatus::Continue;
 }

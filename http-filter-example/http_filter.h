@@ -41,8 +41,8 @@ private:
   const HttpSampleDecoderFilterConfigSharedPtr config_;
   StreamDecoderFilterCallbacks* decoder_callbacks_;
 
-  const LowerCaseString& headerKey();
-  const std::string& headerValue();
+  const LowerCaseString headerKey() const;
+  const std::string headerValue() const;
 };
 
 } // namespace Http
