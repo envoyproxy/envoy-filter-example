@@ -48,9 +48,9 @@ envoy_cc_test(
     name = "http_filter_integration_test",
     srcs = ["http_filter_integration_test.cc"],
     repository = "@envoy",
-    external_deps = ["envoy_filter_network_http_connection_manager"],
     deps = [
         ":http_filter_config",
         "@envoy//test/integration:http_integration_lib",
+        "@envoy_api//envoy/api/v2/filter/network:http_connection_manager_cc",
     ],
 )
