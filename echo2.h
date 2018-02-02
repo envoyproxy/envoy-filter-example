@@ -13,7 +13,7 @@ namespace Filter {
 class Echo2 : public Network::ReadFilter, Logger::Loggable<Logger::Id::filter> {
 public:
   // Network::ReadFilter
-  Network::FilterStatus onData(Buffer::Instance& data) override;
+  Network::FilterStatus onData(Buffer::Instance& data, bool end_stream) override;
   Network::FilterStatus onNewConnection() override { return Network::FilterStatus::Continue; }
   void initializeReadFilterCallbacks(Network::ReadFilterCallbacks& callbacks) override {
     read_callbacks_ = &callbacks;
@@ -23,5 +23,5 @@ private:
   Network::ReadFilterCallbacks* read_callbacks_{};
 };
 
-} // Filter
-} // Envoy
+} // namespace Filter
+} // namespace Envoy
