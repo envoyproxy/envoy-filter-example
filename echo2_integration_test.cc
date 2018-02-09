@@ -5,10 +5,10 @@ namespace Envoy {
 class Echo2IntegrationTest : public BaseIntegrationTest,
                              public testing::TestWithParam<Network::Address::IpVersion> {
 
-std::string echoConfig() {
-  return TestEnvironment::readFileToStringForTest(TestEnvironment::runfilesPath(
-      "echo2_server.yaml"));
-}
+  std::string echoConfig() {
+    return TestEnvironment::readFileToStringForTest(
+        TestEnvironment::runfilesPath("echo2_server.yaml"));
+  }
 
 public:
   Echo2IntegrationTest() : BaseIntegrationTest(GetParam(), echoConfig()) {}
@@ -35,14 +35,15 @@ INSTANTIATE_TEST_CASE_P(IpVersions, Echo2IntegrationTest,
 TEST_P(Echo2IntegrationTest, Echo) {
   Buffer::OwnedImpl buffer("hello");
   std::string response;
-  RawConnectionDriver connection(lookupPort("echo"), buffer,
-                                 [&](Network::ClientConnection&, const Buffer::Instance& data)
-                                     -> void {
-                                       response.append(TestUtility::bufferToString(data));
-                                       connection.close();
-                                     }, GetParam());
+  RawConnectionDriver connection(
+      lookupPort("echo"), buffer,
+      [&](Network::ClientConnection&, const Buffer::Instance& data) -> void {
+        response.append(TestUtility::bufferToString(data));
+        connection.close();
+      },
+      GetParam());
 
   connection.run();
   EXPECT_EQ("hello", response);
 }
-} // Envoy
+} // namespace Envoy
