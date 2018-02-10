@@ -51,6 +51,6 @@ envoy_cc_test(
     deps = [
         ":http_filter_config",
         "@envoy//test/integration:http_integration_lib",
-        "@envoy_api//envoy/api/v2/filter/network:http_connection_manager_cc",
+        "@envoy_api//envoy/config/filter/network/http_connection_manager/v2:http_connection_manager_cc",
     ],
 )
