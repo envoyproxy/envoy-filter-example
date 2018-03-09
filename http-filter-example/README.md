@@ -22,25 +22,40 @@ To run the `sample` integration test:
 
 See the [network filter example](../README.md#how-it-works).
 
-## How to write an HTTP filter
+## How to write and use an HTTP filter
 
-- The main task is to write a class 
- that implements the interface 
- [`Envoy::Http::StreamDecoderFilter`](https://github.com/lyft/envoy/blob/master/include/envoy/http/filter.h#L225),
- as in [`http_filter.h`](http_filter.h) and [`http_filter.cc`](http_filter.cc),
+- The main task is to write a class that implements the interface
+ [`Envoy::Http::StreamDecoderFilter`][StreamDecoderFilter] as in
+ [`http_filter.h`](http_filter.h) and [`http_filter.cc`](http_filter.cc),
  which contains functions that handle http headers, data, and trailers.
  Note that this is an example of decoder filters, 
  and to write encoder filters or decoder/encoder filters
  you need to implement 
- [`Envoy::Http::StreamEncoderFilter`](https://github.com/lyft/envoy/blob/master/include/envoy/http/filter.h#L305) 
- or [`Envoy::Http::StreamFilter`](https://github.com/lyft/envoy/blob/master/include/envoy/http/filter.h#L341)
- instead.
+ [`Envoy::Http::StreamEncoderFilter`][StreamEncoderFilter] or
+ [`Envoy::Http::StreamFilter`][StreamFilter] instead.
 - You also need a class that implements 
  `Envoy::Server::Configuration::NamedHttpFilterConfigFactory`
  to enable the Envoy binary to find your filter,
  as in [`http_filter_config.cc`](http_filter_config.cc).
- It should be linked to the Envoy binary by modifying [`BUILD`](BUILD#L14) file.  
-- Finally, you need to modify the [Envoy config file](envoy.conf#L33-L37)
- to add your filter to the filter chain for a particular HTTP route configuration.
+ It should be linked to the Envoy binary by modifying [`BUILD`][BUILD] file.
+- Finally, you need to modify the Envoy config file to add your filter to the
+ filter chain for a particular HTTP route configuration. For instance, if you
+ wanted to change [the front-proxy example][front-envoy.yaml] to chain our
+ `sample` filter, you'd need to modify its config to look like
+
+```yaml
+http_filters:
+- name: sample          # before envoy.router because order matters!
+  config:
+    key: via
+    val: sample-filter
+- name: envoy.router
+  config: {}
+```
  
 
+[StreamDecoderFilter]: https://github.com/envoyproxy/envoy/blob/b2610c84aeb1f75c804d67effcb40592d790e0f1/include/envoy/http/filter.h#L300
+[StreamEncoderFilter]: https://github.com/envoyproxy/envoy/blob/b2610c84aeb1f75c804d67effcb40592d790e0f1/include/envoy/http/filter.h#L413
+[StreamFilter]: https://github.com/envoyproxy/envoy/blob/b2610c84aeb1f75c804d67effcb40592d790e0f1/include/envoy/http/filter.h#L462
+[BUILD]: https://github.com/envoyproxy/envoy-filter-example/blob/d76d3096c4cbd647d26b44b3f801c3afbc81d3e2/http-filter-example/BUILD#L15-L18
+[front-envoy.yaml]: https://github.com/envoyproxy/envoy/blob/b2610c84aeb1f75c804d67effcb40592d790e0f1/examples/front-proxy/front-envoy.yaml#L28
