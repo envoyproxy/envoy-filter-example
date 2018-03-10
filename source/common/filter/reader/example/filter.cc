@@ -1,4 +1,4 @@
-#include "echo2.h"
+#include "common/filter/reader/example/filter.h"
 
 #include "envoy/buffer/buffer.h"
 #include "envoy/network/connection.h"
@@ -8,7 +8,7 @@
 namespace Envoy {
 namespace Filter {
 
-Network::FilterStatus Echo2::onData(Buffer::Instance& data, bool) {
+Network::FilterStatus ExampleReader::onData(Buffer::Instance& data, bool) {
   ENVOY_CONN_LOG(trace, "echo: got {} bytes", read_callbacks_->connection(), data.length());
   read_callbacks_->connection().write(data, false);
   ASSERT(0 == data.length());

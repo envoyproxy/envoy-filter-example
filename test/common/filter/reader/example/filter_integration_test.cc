@@ -2,16 +2,16 @@
 #include "test/integration/utility.h"
 
 namespace Envoy {
-class Echo2IntegrationTest : public BaseIntegrationTest,
-                             public testing::TestWithParam<Network::Address::IpVersion> {
+class ExampleReaderIntegrationTest : public BaseIntegrationTest,
+                               public testing::TestWithParam<Network::Address::IpVersion> {
 
   std::string echoConfig() {
     return TestEnvironment::readFileToStringForTest(
-        TestEnvironment::runfilesPath("echo2_server.yaml"));
+        TestEnvironment::runfilesPath("configs/v2/echo.yaml"));
   }
 
 public:
-  Echo2IntegrationTest() : BaseIntegrationTest(GetParam(), echoConfig()) {}
+  ExampleReaderIntegrationTest() : BaseIntegrationTest(GetParam(), echoConfig()) {}
   /**
    * Initializer for an individual integration test.
    */
@@ -26,10 +26,10 @@ public:
   }
 };
 
-INSTANTIATE_TEST_CASE_P(IpVersions, Echo2IntegrationTest,
+INSTANTIATE_TEST_CASE_P(IpVersions, ExampleReaderIntegrationTest,
                         testing::ValuesIn(TestEnvironment::getIpVersionsForTest()));
 
-TEST_P(Echo2IntegrationTest, Echo) {
+TEST_P(ExampleReaderIntegrationTest, Echo) {
   Buffer::OwnedImpl buffer("hello");
   std::string response;
   RawConnectionDriver connection(

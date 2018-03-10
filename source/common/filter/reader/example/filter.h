@@ -8,9 +8,9 @@ namespace Envoy {
 namespace Filter {
 
 /**
- * Implementation of a basic echo filter.
+ * Implementation of a basic read, echo filter.
  */
-class Echo2 : public Network::ReadFilter, Logger::Loggable<Logger::Id::filter> {
+class ExampleReader : public Network::ReadFilter, Logger::Loggable<Logger::Id::filter> {
 public:
   // Network::ReadFilter
   Network::FilterStatus onData(Buffer::Instance& data, bool end_stream) override;

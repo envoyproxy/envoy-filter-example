@@ -1,7 +1,7 @@
 # Envoy filter example
 
 This project demonstrates the linking of additional filters with the Envoy binary.
-A new filter `echo2` is introduced, identical modulo renaming to the existing
+A new filter `my.net.filter.reader.example` is introduced, identical modulo renaming to the existing
 [`echo`](https://github.com/envoyproxy/envoy/blob/master/source/common/filter/echo.h)
 filter. Integration tests demonstrating the filter's end-to-end behavior are
 also provided.
@@ -12,25 +12,30 @@ For an example of additional HTTP filters, see [here](http-filter-example).
 
 To build the Envoy static binary:
 
-1. `git submodule update --init`
-2. `bazel build //:envoy`
+```
+$ bazel build //source:envoy
+```
 
 ## Testing
 
-To run the `echo2` integration test:
+To run the integration tests:
 
-`bazel test //:echo2_integration_test`
+```
+$ bazel test //test/...
+```
 
 To run the regular Envoy tests from this project:
 
-`bazel test @envoy//test/...`
+```
+$ bazel test @envoy//test/...
+```
 
 ## How it works
 
-The [Envoy repository](https://github.com/envoyproxy/envoy/) is provided as a submodule.
+The [Envoy repository](https://github.com/envoyproxy/envoy/) will be downloaded as an .zip via bazel's `http_archive`.
 The [`WORKSPACE`](WORKSPACE) file maps the `@envoy` repository to this local path.
 
-The [`BUILD`](BUILD) file introduces a new Envoy static binary target, `envoy`,
-that links together the new filter and `@envoy//source/exe:envoy_main_lib`. The
-`echo2` filter registers itself during the static initialization phase of the
+The [`source/BUILD`](source/BUILD) file introduces a new Envoy static binary target, `envoy`,
+that links together the new filters and `@envoy//source/exe:envoy_main_lib`. The
+filter examples register themselves during the static initialization phase of the
 Envoy binary as a new filter.
