@@ -3,7 +3,7 @@
 
 namespace Envoy {
 class ExampleReaderIntegrationTest : public BaseIntegrationTest,
-                               public testing::TestWithParam<Network::Address::IpVersion> {
+                                     public testing::TestWithParam<Network::Address::IpVersion> {
 
   std::string echoConfig() {
     return TestEnvironment::readFileToStringForTest(

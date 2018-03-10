@@ -32,7 +32,7 @@ $ bazel test @envoy//test/...
 
 ## How it works
 
-The [Envoy repository](https://github.com/envoyproxy/envoy/) will be downloaded as an .zip via bazel's `http_archive`.
+The [Envoy repository](https://github.com/envoyproxy/envoy/) will be downloaded as a .zip via bazel's `http_archive`.
 The [`WORKSPACE`](WORKSPACE) file maps the `@envoy` repository to this local path.
 
 The [`source/BUILD`](source/BUILD) file introduces a new Envoy static binary target, `envoy`,
