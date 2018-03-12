@@ -23,6 +23,6 @@ static_resources:
           domain: foo
           descriptors: { entries: [ { key: foo, value: bar } ] }
 
-      # Activates `my.net.filter.reader.example` filter.
-      - name: my.net.filter.reader.example
+      # Activates `io.example.network.filter` filter.
+      - name: io.example.network.filter.reader
         config: { }

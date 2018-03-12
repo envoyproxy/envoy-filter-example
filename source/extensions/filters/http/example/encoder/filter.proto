@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package io.example.http.filter;
+
+import "validate/validate.proto";
+
+// [#protodoc-title: Encoder filter]
+// Encoder filter.
+message Encoder {
+    string key = 1 [(validate.rules).string.min_bytes = 1];
+    string val = 2 [(validate.rules).string.min_bytes = 1];
+}

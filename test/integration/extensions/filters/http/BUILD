@@ -1,19 +1,22 @@
-package(default_visibility = ["//visibility:public"])
+licenses(["notice"])  # Apache 2
 
 load(
     "@envoy//bazel:envoy_build_system.bzl",
-    "envoy_cc_binary",
+    "envoy_cc_test",
 )
-load("@envoy_api//bazel:api_build_system.bzl", "api_proto_library")
 
-envoy_cc_binary(
-    name = "envoy",
+envoy_cc_test(
+    name = "filter_integration_test",
+    srcs = [
+        "example_decoder_encoder_test.cc",
+        "example_decoder_test.cc",
+        "example_encoder_test.cc",
+    ],
     repository = "@envoy",
     deps = [
         "//source/extensions/filters/http/example/decoder:filter_config",
         "//source/extensions/filters/http/example/decoder_encoder:filter_config",
         "//source/extensions/filters/http/example/encoder:filter_config",
-        "//source/extensions/filters/network/example/reader:filter_config",
-        "@envoy//source/exe:envoy_main_entry_lib",
+        "@envoy//test/integration:http_integration_lib",
     ],
 )
