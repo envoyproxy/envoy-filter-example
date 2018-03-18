@@ -21,7 +21,7 @@ $ bazel build //source:envoy
 To run the integration tests:
 
 ```
-$ bazel test //test/...
+$ bazel test --test_output=all //test/...
 ```
 
 To run the regular Envoy tests from this project:
