@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+package io.example.network.filter;
+
+// [#protodoc-title: Reader filter]
+// A simple example of a Reader filter.
+message Reader {
+
+}

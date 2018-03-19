@@ -1,0 +1,1 @@
+# HTTP encoder filter simple example

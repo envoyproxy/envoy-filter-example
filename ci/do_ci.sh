@@ -5,11 +5,11 @@ if [[ -f "${HOME:-/root}/.gitconfig" ]]; then
 fi
 
 function do_build () {
-    bazel build --verbose_failures=true //:envoy
+    bazel build --verbose_failures=true //source:envoy
 }
 
 function do_test() {
-    bazel test --test_output=all //:echo2_integration_test
+    bazel test --test_output=all //test/...
 }
 
 case "$1" in
