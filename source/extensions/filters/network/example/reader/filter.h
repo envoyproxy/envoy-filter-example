@@ -4,6 +4,8 @@
 
 #include "common/common/logger.h"
 
+#include "source/extensions/filters/network/example/reader/filter.pb.h"
+
 namespace Envoy {
 namespace Filter {
 
