@@ -19,11 +19,5 @@ static_resources:
         port_value: 0
     filter_chains:
     - filters:
-      - name: envoy.ratelimit
-        config:
-          stat_prefix: name
-          domain: foo
-          descriptors: { entries: [ { key: foo, value: bar } ] }
-
       - name: echo2
-        config: { }
+        config:
