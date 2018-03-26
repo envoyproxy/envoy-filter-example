@@ -14,13 +14,22 @@ namespace Configuration {
  */
 class Echo2ConfigFactory : public NamedNetworkFilterConfigFactory {
 public:
-  // NamedNetworkFilterConfigFactory
-  NetworkFilterFactoryCb createFilterFactory(const Json::Object&, FactoryContext&) override {
-    return [](Network::FilterManager& filter_manager)
-        -> void { filter_manager.addReadFilter(Network::ReadFilterSharedPtr{new Filter::Echo2()}); };
+  NetworkFilterFactoryCb createFilterFactoryFromProto(const Protobuf::Message&,
+                                                      FactoryContext&) override {
+    return [](Network::FilterManager& filter_manager) -> void {
+      filter_manager.addReadFilter(Network::ReadFilterSharedPtr{new Filter::Echo2()});
+    };
+  }
+
+  ProtobufTypes::MessagePtr createEmptyConfigProto() override {
+    return ProtobufTypes::MessagePtr{new Envoy::ProtobufWkt::Empty()};
   }
 
   std::string name() override { return "echo2"; }
+
+  NetworkFilterFactoryCb createFilterFactory(const Json::Object&, FactoryContext&) override {
+    NOT_IMPLEMENTED;
+  }
 };
 
 /**
