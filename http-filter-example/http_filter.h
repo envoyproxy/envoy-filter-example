@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include "server/config/network/http_connection_manager.h"
+#include "extensions/filters/network/http_connection_manager/config.h"
 
 #include "http-filter-example/http_filter.pb.h"
 
