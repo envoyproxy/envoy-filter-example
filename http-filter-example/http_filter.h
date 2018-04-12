@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include "extensions/filters/network/http_connection_manager/config.h"
+#include "envoy/server/filter_config.h"
 
 #include "http-filter-example/http_filter.pb.h"
 
