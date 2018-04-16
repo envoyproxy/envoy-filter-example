@@ -13,7 +13,7 @@ envoy_cc_binary(
     deps = [
         ":echo2_config",
         "@envoy//source/exe:envoy_main_entry_lib",
-        "@mixer//src/",
+        "@mixer//src",
     ],
 )
 
