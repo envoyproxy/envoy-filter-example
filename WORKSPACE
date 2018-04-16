@@ -20,6 +20,7 @@ envoy_dependencies()
 
 http_archive(
     name = "mixer",
+    strip_prefix = "proxy-0.7.1",
     url = "https://github.com/istio/proxy/archive/0.7.1.zip",
 )
 
