@@ -22,6 +22,8 @@ http_archive(
 
 load("@mixer//:repositories.bzl", "mixerapi_dependencies")
 mixerapi_dependencies()
+load("@mixer//:repositories.bzl", "boringssl_repositories")
+boringssl_repositories(bind=True)
 
 load("@io_bazel_rules_go//go:def.bzl", "go_rules_dependencies", "go_register_toolchains")
 load("@com_lyft_protoc_gen_validate//bazel:go_proto_library.bzl", "go_proto_repositories")
