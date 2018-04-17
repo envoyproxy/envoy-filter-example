@@ -7,7 +7,7 @@ jobs:
   build:
     docker:
       - image: *envoy-build-image
-    resource_class: xlarge
+    #resource_class: xlarge
     steps:
       - checkout
       - run: git submodule update --init
@@ -15,7 +15,7 @@ jobs:
   test:
     docker:
       - image: *envoy-build-image
-    resource_class: xlarge
+    #resource_class: xlarge
     steps:
       - checkout
       - run: git submodule update --init
