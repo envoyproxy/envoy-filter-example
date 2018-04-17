@@ -10,17 +10,18 @@ load("@envoy//bazel:cc_configure.bzl", "cc_configure")
 
 envoy_dependencies()
 
+load("@envoy_api//bazel:repositories.bzl", "api_dependencies")
+api_dependencies()
+
+ISTIO_MIXER_SHA="d223f496ca5f15214869f5215cbf114c00012899"
 http_archive(
     name = "mixer",
-    strip_prefix = "proxy-0.7.1",
-    url = "https://github.com/istio/proxy/archive/0.7.1.zip",
+    strip_prefix = "proxy-"+ISTIO_MIXER_SHA,
+    url = "https://github.com/istio/proxy/archive/"+ISTIO_MIXER_SHA+".zip",
 )
 
 load("@mixer//:repositories.bzl", "mixerapi_dependencies")
 mixerapi_dependencies()
-
-load("@envoy_api//bazel:repositories.bzl", "api_dependencies")
-api_dependencies()
 
 load("@io_bazel_rules_go//go:def.bzl", "go_rules_dependencies", "go_register_toolchains")
 load("@com_lyft_protoc_gen_validate//bazel:go_proto_library.bzl", "go_proto_repositories")
