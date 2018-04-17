@@ -9,7 +9,8 @@ function do_build () {
 }
 
 function do_test() {
-    bazel test --test_output=all //:echo2_integration_test
+    bazel test --test_output=all --test_env=ENVOY_IP_TEST_VERSIONS=v4only \
+      //:echo2_integration_test
 }
 
 case "$1" in
