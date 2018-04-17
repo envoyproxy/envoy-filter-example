@@ -17,7 +17,6 @@ envoy_cc_binary(
         "@mixer//src/envoy/http/jwt_auth:http_filter_factory",
         "@mixer//src/envoy/http/mixer:filter_lib",
         "@mixer//src/envoy/tcp/mixer:filter_lib",
-        "@mixer//src/envoy/alts:alts_socket_factory",
     ],
 )
 

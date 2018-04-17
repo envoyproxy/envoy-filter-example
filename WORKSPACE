@@ -1,13 +1,5 @@
 workspace(name = "envoy_filter_example")
 
-# We need newer gRPC than Envoy has for ALTS, this could be removed once Envoy picks
-# newer gRPC with ALTS support. (likely v1.11).
-git_repository(
-    name = "com_github_grpc_grpc",
-    remote = "https://github.com/grpc/grpc.git",
-    commit = "c50405364a194a0e4931153cbe329662d90530bc",  # Mar 28, 2018
-)
-
 local_repository(
     name = "envoy",
     path = "envoy",
