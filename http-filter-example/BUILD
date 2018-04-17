@@ -40,7 +40,7 @@ envoy_cc_library(
     repository = "@envoy",
     deps = [
         ":http_filter_lib",
-        "@envoy//source/exe:envoy_common_lib",
+        "@envoy//include/envoy/server:filter_config_interface",
     ],
 )
 

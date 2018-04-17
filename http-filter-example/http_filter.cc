@@ -2,7 +2,7 @@
 
 #include "http_filter.h"
 
-#include "server/config/network/http_connection_manager.h"
+#include "envoy/server/filter_config.h"
 
 namespace Envoy {
 namespace Http {
