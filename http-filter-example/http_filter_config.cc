@@ -14,8 +14,8 @@ namespace Configuration {
 
 class HttpSampleDecoderFilterConfig : public NamedHttpFilterConfigFactory {
 public:
-  HttpFilterFactoryCb createFilterFactory(const Json::Object& json_config, const std::string&,
-                                          FactoryContext& context) override {
+  Http::HttpFilterFactoryCb createFilterFactory(const Json::Object& json_config, const std::string&,
+                                                FactoryContext& context) override {
 
     sample::Decoder proto_config;
     translateHttpSampleDecoderFilter(json_config, proto_config);
@@ -23,9 +23,9 @@ public:
     return createFilter(proto_config, context);
   }
 
-  HttpFilterFactoryCb createFilterFactoryFromProto(const Protobuf::Message& proto_config,
-                                                   const std::string&,
-                                                   FactoryContext& context) override {
+  Http::HttpFilterFactoryCb createFilterFactoryFromProto(const Protobuf::Message& proto_config,
+                                                         const std::string&,
+                                                         FactoryContext& context) override {
 
     return createFilter(
         Envoy::MessageUtil::downcastAndValidate<const sample::Decoder&>(proto_config), context);
@@ -41,8 +41,8 @@ public:
   std::string name() override { return "sample"; }
 
 private:
-  HttpFilterFactoryCb createFilter(const sample::Decoder& proto_config, FactoryContext& context) {
-
+  Http::HttpFilterFactoryCb createFilter(const sample::Decoder& proto_config,
+                                         FactoryContext& context) {
     Http::HttpSampleDecoderFilterConfigSharedPtr config =
         std::make_shared<Http::HttpSampleDecoderFilterConfig>(
             Http::HttpSampleDecoderFilterConfig(proto_config));
