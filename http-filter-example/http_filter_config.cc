@@ -41,12 +41,12 @@ public:
   std::string name() override { return "sample"; }
 
 private:
-  Http::FilterFactoryCb createFilter(const sample::Decoder& proto_config, FactoryContext& context) {
+  Http::FilterFactoryCb createFilter(const sample::Decoder& proto_config, FactoryContext&) {
     Http::HttpSampleDecoderFilterConfigSharedPtr config =
         std::make_shared<Http::HttpSampleDecoderFilterConfig>(
             Http::HttpSampleDecoderFilterConfig(proto_config));
 
-    return [&context, config](Http::FilterChainFactoryCallbacks& callbacks) -> void {
+    return [config](Http::FilterChainFactoryCallbacks& callbacks) -> void {
       auto filter = new Http::HttpSampleDecoderFilter(config);
       callbacks.addStreamDecoderFilter(Http::StreamDecoderFilterSharedPtr{filter});
     };
