@@ -35,7 +35,7 @@ TEST_P(Echo2IntegrationTest, Echo) {
   RawConnectionDriver connection(
       lookupPort("listener_0"), buffer,
       [&](Network::ClientConnection&, const Buffer::Instance& data) -> void {
-        response.append(TestUtility::bufferToString(data));
+        response.append(Buffer::OwnedImpl(data).toString());
         connection.close();
       },
       GetParam());
