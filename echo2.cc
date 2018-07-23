@@ -11,7 +11,7 @@ namespace Filter {
 Network::FilterStatus Echo2::onData(Buffer::Instance& data, bool) {
   ENVOY_CONN_LOG(trace, "echo: got {} bytes", read_callbacks_->connection(), data.length());
   read_callbacks_->connection().write(data, false);
-  ASSERT(0 == data.length());
+  ASSERT(0 == data.length(), "Not all of the data was consumed when writing.");
   return Network::FilterStatus::StopIteration;
 }
 
