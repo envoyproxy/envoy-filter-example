@@ -1,5 +1,4 @@
 #include "test/integration/http_integration.h"
-#include "test/integration/utility.h"
 
 namespace Envoy {
 class HttpFilterSampleIntegrationTest : public HttpIntegrationTest,
@@ -26,13 +25,12 @@ TEST_P(HttpFilterSampleIntegrationTest, Test1) {
 
   IntegrationCodecClientPtr codec_client;
   FakeHttpConnectionPtr fake_upstream_connection;
-  IntegrationStreamDecoderPtr response(new IntegrationStreamDecoder(*dispatcher_));
   FakeStreamPtr request_stream;
 
   codec_client = makeHttpConnection(lookupPort("http"));
-  codec_client->makeHeaderOnlyRequest(headers, *response);
-  fake_upstream_connection = fake_upstreams_[0]->waitForHttpConnection(*dispatcher_);
-  request_stream = fake_upstream_connection->waitForNewStream(*dispatcher_);
+  auto response = codec_client->makeHeaderOnlyRequest(headers);
+  fake_upstreams_[0]->waitForHttpConnection(*dispatcher_, fake_upstream_connection, std::chrono::milliseconds(5));
+  fake_upstream_connection->waitForNewStream(*dispatcher_, request_stream);
   request_stream->waitForEndStream(*dispatcher_);
   response->waitForEndStream();
 
