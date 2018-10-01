@@ -5,7 +5,7 @@ class HttpFilterSampleIntegrationTest : public HttpIntegrationTest,
                                         public testing::TestWithParam<Network::Address::IpVersion> {
 public:
   HttpFilterSampleIntegrationTest()
-      : HttpIntegrationTest(Http::CodecClient::Type::HTTP1, GetParam()) {}
+      : HttpIntegrationTest(Http::CodecClient::Type::HTTP1, GetParam(), realTime()) {}
   /**
    * Initializer for an individual integration test.
    */
@@ -29,9 +29,10 @@ TEST_P(HttpFilterSampleIntegrationTest, Test1) {
 
   codec_client = makeHttpConnection(lookupPort("http"));
   auto response = codec_client->makeHeaderOnlyRequest(headers);
-  fake_upstreams_[0]->waitForHttpConnection(*dispatcher_, fake_upstream_connection, std::chrono::milliseconds(5));
-  fake_upstream_connection->waitForNewStream(*dispatcher_, request_stream);
-  request_stream->waitForEndStream(*dispatcher_);
+  ASSERT_TRUE(fake_upstreams_[0]->waitForHttpConnection(*dispatcher_, fake_upstream_connection,
+                                                        std::chrono::milliseconds(5)));
+  ASSERT_TRUE(fake_upstream_connection->waitForNewStream(*dispatcher_, request_stream));
+  ASSERT_TRUE(request_stream->waitForEndStream(*dispatcher_));
   response->waitForEndStream();
 
   EXPECT_STREQ("sample-filter",
