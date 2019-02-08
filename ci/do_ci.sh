@@ -1,5 +1,11 @@
 #!/bin/bash -e
 
+export PATH=/usr/lib/llvm-7/bin:$PATH
+export CC=clang
+export CXX=clang++
+export ASAN_SYMBOLIZER_PATH=/usr/lib/llvm-7/bin/llvm-symbolizer
+echo "$CC/$CXX toolchain configured"
+
 if [[ -f "${HOME:-/root}/.gitconfig" ]]; then
     mv "${HOME:-/root}/.gitconfig" "${HOME:-/root}/.gitconfig_save"
 fi
