@@ -11,7 +11,7 @@ class Echo2IntegrationTest : public BaseIntegrationTest,
   }
 
 public:
-  Echo2IntegrationTest() : BaseIntegrationTest(GetParam(), realTime(), echoConfig()) {}
+  Echo2IntegrationTest() : BaseIntegrationTest(GetParam(), echoConfig()) {}
   /**
    * Initializer for an individual integration test.
    */
