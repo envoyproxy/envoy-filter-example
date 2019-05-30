@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-export PATH=/usr/lib/llvm-7/bin:$PATH
+export PATH=/usr/lib/llvm-8/bin:$PATH
 export CC=clang
 export CXX=clang++
 export ASAN_SYMBOLIZER_PATH=/usr/lib/llvm-7/bin/llvm-symbolizer
