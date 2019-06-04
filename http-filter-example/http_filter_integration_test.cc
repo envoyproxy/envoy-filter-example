@@ -35,8 +35,8 @@ TEST_P(HttpFilterSampleIntegrationTest, Test1) {
   ASSERT_TRUE(request_stream->waitForEndStream(*dispatcher_));
   response->waitForEndStream();
 
-  EXPECT_STREQ("sample-filter",
-               request_stream->headers().get(Http::LowerCaseString("via"))->value().c_str());
+  EXPECT_EQ("sample-filter",
+               request_stream->headers().get(Http::LowerCaseString("via"))->value().getStringView());
 
   codec_client->close();
 }
