@@ -7,6 +7,7 @@ admin:
 static_resources:
   clusters:
     name: cluster_0
+    connect_timeout: 0.25s
     load_assignment:
       cluster_name: cluster_0
       endpoints:
