@@ -17,7 +17,7 @@ public:
   }
 };
 
-INSTANTIATE_TEST_CASE_P(IpVersions, HttpFilterSampleIntegrationTest,
+INSTANTIATE_TEST_SUITE_P(IpVersions, HttpFilterSampleIntegrationTest,
                         testing::ValuesIn(TestEnvironment::getIpVersionsForTest()));
 
 TEST_P(HttpFilterSampleIntegrationTest, Test1) {

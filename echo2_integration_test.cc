@@ -26,7 +26,7 @@ public:
   }
 };
 
-INSTANTIATE_TEST_CASE_P(IpVersions, Echo2IntegrationTest,
+INSTANTIATE_TEST_SUITE_P(IpVersions, Echo2IntegrationTest,
                         testing::ValuesIn(TestEnvironment::getIpVersionsForTest()));
 
 TEST_P(Echo2IntegrationTest, Echo) {
