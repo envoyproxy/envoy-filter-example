@@ -30,6 +30,7 @@ public:
   Network::FilterFactoryCb createFilterFactory(const Json::Object&, FactoryContext&) override {
     NOT_IMPLEMENTED_GCOVR_EXCL_LINE;
   }
+  bool isTerminalFilter() override { return true; }
 };
 
 /**
