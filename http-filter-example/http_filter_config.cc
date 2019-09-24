@@ -28,7 +28,7 @@ public:
                                                      FactoryContext& context) override {
 
     return createFilter(
-        Envoy::MessageUtil::downcastAndValidate<const sample::Decoder&>(proto_config), context);
+        Envoy::MessageUtil::downcastAndValidate<const sample::Decoder&>(proto_config, context.messageValidationVisitor()), context);
   }
 
   /**
