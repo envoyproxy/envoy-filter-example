@@ -28,7 +28,7 @@ public:
     return ProtobufTypes::MessagePtr{new sample::Decoder()};
   }
 
-  std::string name() override { return "sample"; }
+  const std::string name() const override { return "sample"; }
 
 private:
   Http::FilterFactoryCb createFilter(const sample::Decoder& proto_config, FactoryContext&) {
