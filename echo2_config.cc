@@ -25,7 +25,7 @@ public:
     return ProtobufTypes::MessagePtr{new Envoy::ProtobufWkt::Empty()};
   }
 
-  std::string name() override { return "echo2"; }
+  std::string name() const override { return "echo2"; }
 
   bool isTerminalFilter() override { return true; }
 };
