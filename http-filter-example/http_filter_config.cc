@@ -3,6 +3,7 @@
 #include "http_filter.h"
 
 #include "common/config/json_utility.h"
+#include "common/protobuf/message_validator_impl.h"
 #include "envoy/registry/registry.h"
 
 #include "http-filter-example/http_filter.pb.h"
@@ -28,7 +29,9 @@ public:
                                                      FactoryContext& context) override {
 
     return createFilter(
-        Envoy::MessageUtil::downcastAndValidate<const sample::Decoder&>(proto_config), context);
+        Envoy::MessageUtil::downcastAndValidate<const sample::Decoder&>(
+            proto_config, ProtobufMessage::getStrictValidationVisitor()),
+          context);
   }
 
   /**
