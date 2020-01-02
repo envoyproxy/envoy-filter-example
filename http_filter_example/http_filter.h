@@ -4,7 +4,7 @@
 
 #include "envoy/server/filter_config.h"
 
-#include "http-filter-example/http_filter.pb.h"
+#include "http_filter_example/http_filter.pb.h"
 
 namespace Envoy {
 namespace Http {
