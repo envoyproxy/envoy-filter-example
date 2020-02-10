@@ -2,8 +2,8 @@
 
 #include "envoy/registry/registry.h"
 
-#include "http-filter-example/http_filter.pb.h"
-#include "http-filter-example/http_filter.pb.validate.h"
+#include "http_filter_example/http_filter.pb.h"
+#include "http_filter_example/http_filter.pb.validate.h"
 #include "http_filter.h"
 
 namespace Envoy {
@@ -28,7 +28,7 @@ public:
     return ProtobufTypes::MessagePtr{new sample::Decoder()};
   }
 
-  std::string name() const override { return "sample"; }
+  std::string name() override { return "sample"; }
 
 private:
   Http::FilterFactoryCb createFilter(const sample::Decoder& proto_config, FactoryContext&) {
