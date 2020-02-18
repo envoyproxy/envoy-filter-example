@@ -32,9 +32,9 @@ public:
   void onDestroy() override;
 
   // Http::StreamDecoderFilter
-  FilterHeadersStatus decodeHeaders(HeaderMap&, bool) override;
+  FilterHeadersStatus decodeHeaders(RequestHeaderMap&, bool) override;
   FilterDataStatus decodeData(Buffer::Instance&, bool) override;
-  FilterTrailersStatus decodeTrailers(HeaderMap&) override;
+  FilterTrailersStatus decodeTrailers(RequestTrailerMap&) override;
   void setDecoderFilterCallbacks(StreamDecoderFilterCallbacks&) override;
 
 private:
