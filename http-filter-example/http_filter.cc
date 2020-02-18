@@ -26,7 +26,7 @@ const std::string HttpSampleDecoderFilter::headerValue() const {
   return config_->val();
 }
 
-FilterHeadersStatus HttpSampleDecoderFilter::decodeHeaders(HeaderMap& headers, bool) {
+FilterHeadersStatus HttpSampleDecoderFilter::decodeHeaders(RequestHeaderMap& headers, bool) {
   // add a header
   headers.addCopy(headerKey(), headerValue());
 
@@ -37,7 +37,7 @@ FilterDataStatus HttpSampleDecoderFilter::decodeData(Buffer::Instance&, bool) {
   return FilterDataStatus::Continue;
 }
 
-FilterTrailersStatus HttpSampleDecoderFilter::decodeTrailers(HeaderMap&) {
+FilterTrailersStatus HttpSampleDecoderFilter::decodeTrailers(RequestTrailerMap&) {
   return FilterTrailersStatus::Continue;
 }
 
