@@ -10,7 +10,7 @@ namespace Envoy {
 namespace Server {
 namespace Configuration {
 
-class HttpSampleDecoderFilterConfig : public NamedHttpFilterConfigFactory {
+class HttpSampleDecoderFilterConfigFactory : public NamedHttpFilterConfigFactory {
 public:
   Http::FilterFactoryCb createFilterFactoryFromProto(const Protobuf::Message& proto_config,
                                                      const std::string&,
@@ -46,7 +46,7 @@ private:
 /**
  * Static registration for this sample filter. @see RegisterFactory.
  */
-static Registry::RegisterFactory<HttpSampleDecoderFilterConfig, NamedHttpFilterConfigFactory>
+static Registry::RegisterFactory<HttpSampleDecoderFilterConfigFactory, NamedHttpFilterConfigFactory>
     register_;
 
 } // namespace Configuration
