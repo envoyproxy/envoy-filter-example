@@ -30,17 +30,15 @@ INSTANTIATE_TEST_SUITE_P(IpVersions, Echo2IntegrationTest,
                         testing::ValuesIn(TestEnvironment::getIpVersionsForTest()));
 
 TEST_P(Echo2IntegrationTest, Echo) {
-  Buffer::OwnedImpl buffer("hello");
   std::string response;
-  RawConnectionDriver connection(
-      lookupPort("listener_0"), buffer,
-      [&](Network::ClientConnection&, const Buffer::Instance& data) -> void {
+  auto connection = createConnectionDriver(
+      lookupPort("listener_0"), "hello",
+      [&](Network::ClientConnection& conn, const Buffer::Instance& data) -> void {
         response.append(data.toString());
-        connection.close();
-      },
-      GetParam());
+	conn.close(Network::ConnectionCloseType::FlushWrite);
+      });
 
-  connection.run();
+  connection->run();
   EXPECT_EQ("hello", response);
 }
 } // namespace Envoy
