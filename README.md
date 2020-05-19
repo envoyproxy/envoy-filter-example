@@ -31,6 +31,6 @@ The [Envoy repository](https://github.com/envoyproxy/envoy/) is provided as a su
 The [`WORKSPACE`](WORKSPACE) file maps the `@envoy` repository to this local path.
 
 The [`BUILD`](BUILD) file introduces a new Envoy static binary target, `envoy`,
-that links together the new filter and `@envoy//source/exe:envoy_main_lib`. The
+that links together the new filter and `@envoy//source/exe:envoy_main_entry_lib`. The
 `echo2` filter registers itself during the static initialization phase of the
 Envoy binary as a new filter.
