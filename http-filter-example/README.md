@@ -46,11 +46,12 @@ See the [network filter example](../README.md#how-it-works).
 ```yaml
 http_filters:
 - name: sample          # before envoy.router because order matters!
-  config:
+  typed_config:
+    "@type": type.googleapis.com/sample.Decoder
     key: via
     val: sample-filter
 - name: envoy.router
-  config: {}
+  typed_config: {}
 ```
  
 
