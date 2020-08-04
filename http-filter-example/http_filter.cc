@@ -37,10 +37,6 @@ FilterDataStatus HttpSampleDecoderFilter::decodeData(Buffer::Instance&, bool) {
   return FilterDataStatus::Continue;
 }
 
-FilterTrailersStatus HttpSampleDecoderFilter::decodeTrailers(RequestTrailerMap&) {
-  return FilterTrailersStatus::Continue;
-}
-
 void HttpSampleDecoderFilter::setDecoderFilterCallbacks(StreamDecoderFilterCallbacks& callbacks) {
   decoder_callbacks_ = &callbacks;
 }

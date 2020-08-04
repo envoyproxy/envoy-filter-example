@@ -1,6 +1,7 @@
 #include <string>
 
 #include "envoy/registry/registry.h"
+#include "envoy/server/filter_config.h"
 
 #include "http-filter-example/http_filter.pb.h"
 #include "http-filter-example/http_filter.pb.validate.h"
