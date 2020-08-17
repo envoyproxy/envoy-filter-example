@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include "envoy/server/filter_config.h"
+#include "extensions/filters/http/common/pass_through_filter.h"
 
 #include "http-filter-example/http_filter.pb.h"
 
@@ -21,9 +21,9 @@ private:
   const std::string val_;
 };
 
-typedef std::shared_ptr<HttpSampleDecoderFilterConfig> HttpSampleDecoderFilterConfigSharedPtr;
+using HttpSampleDecoderFilterConfigSharedPtr = std::shared_ptr<HttpSampleDecoderFilterConfig>;
 
-class HttpSampleDecoderFilter : public StreamDecoderFilter {
+class HttpSampleDecoderFilter : public PassThroughDecoderFilter {
 public:
   HttpSampleDecoderFilter(HttpSampleDecoderFilterConfigSharedPtr);
   ~HttpSampleDecoderFilter();
@@ -34,7 +34,6 @@ public:
   // Http::StreamDecoderFilter
   FilterHeadersStatus decodeHeaders(RequestHeaderMap&, bool) override;
   FilterDataStatus decodeData(Buffer::Instance&, bool) override;
-  FilterTrailersStatus decodeTrailers(RequestTrailerMap&) override;
   void setDecoderFilterCallbacks(StreamDecoderFilterCallbacks&) override;
 
 private:
