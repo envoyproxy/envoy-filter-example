@@ -1,27 +1,30 @@
-#!/usr/bin/python
-from BaseHTTPServer import BaseHTTPRequestHandler,HTTPServer
+#!/usr/bin/python3
+from http.server import BaseHTTPRequestHandler,HTTPServer
 
-PORT = 8081
+HTTP_PORT = 8081
 
+# This class will handles any incoming request
 class doHandler(BaseHTTPRequestHandler):
+
     # Handler for the GET requests
     def do_GET(self):
         self.send_response(200)
         self.send_header('Content-type','text/html')
         self.end_headers()
-        print self.headers  # print the http header
-        # Send the html message
-        self.wfile.write("Hello World !")
+        print(self.headers)
+        # Send the message
+        self.wfile.write(b"Hello World !\r\n")
+        self.wfile.write(self.headers.as_bytes())
         return
 
 try:
-    # Create a web server and define the handler to manage the incoming request
-    server = HTTPServer(('', PORT), doHandler)
-    print 'Started httpserver on port ' , PORT
+    # Create a http server and define the handler to manage the request
+    server = HTTPServer(('', HTTP_PORT), doHandler)
+    print('Started httpserver on port ' , HTTP_PORT)
 
     # Wait forever for incoming http requests
     server.serve_forever()
 
 except KeyboardInterrupt:
-    print 'shutting down the web server'
+    print('^C received, shutting down the web server')
     server.socket.close()

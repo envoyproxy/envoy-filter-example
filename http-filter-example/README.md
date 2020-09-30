@@ -60,7 +60,7 @@ or you can just use this demo yaml file [config.yaml](config.yaml).
 ```
 - Run an http server
 ```sh
-python httpserver.py
+python ./http-filter-example/httpserver.py
 ```
 - Access the http server with curl cmd:
 ```sh
@@ -82,6 +82,10 @@ via: sample-filter
 x-envoy-expected-rq-timeout-ms: 15000
 content-length: 0
 ```
+- Start service and verify with shell script
+
+1. `bash ./http-filter-example/start_service.sh`
+2. `bash ./http-filter-example/verify.sh`
 
 [StreamDecoderFilter]: https://github.com/envoyproxy/envoy/blob/b2610c84aeb1f75c804d67effcb40592d790e0f1/include/envoy/http/filter.h#L300
 [StreamEncoderFilter]: https://github.com/envoyproxy/envoy/blob/b2610c84aeb1f75c804d67effcb40592d790e0f1/include/envoy/http/filter.h#L413
