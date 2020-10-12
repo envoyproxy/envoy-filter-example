@@ -12,13 +12,15 @@ public:
   void SetUp() override { initialize(); }
 
   void initialize() override {
-    config_helper_.addFilter("{ name: sample, typed_config: { \"@type\": type.googleapis.com/sample.Decoder, key: via, val: sample-filter } }");
+    config_helper_.addFilter(
+        "{ name: sample, typed_config: { \"@type\": type.googleapis.com/sample.Decoder, key: via, "
+        "val: sample-filter } }");
     HttpIntegrationTest::initialize();
   }
 };
 
 INSTANTIATE_TEST_SUITE_P(IpVersions, HttpFilterSampleIntegrationTest,
-                        testing::ValuesIn(TestEnvironment::getIpVersionsForTest()));
+                         testing::ValuesIn(TestEnvironment::getIpVersionsForTest()));
 
 TEST_P(HttpFilterSampleIntegrationTest, Test1) {
   Http::TestRequestHeaderMapImpl headers{
@@ -35,8 +37,9 @@ TEST_P(HttpFilterSampleIntegrationTest, Test1) {
   ASSERT_TRUE(request_stream->waitForEndStream(*dispatcher_));
   response->waitForEndStream();
 
-  EXPECT_EQ("sample-filter",
-               request_stream->headers().get(Http::LowerCaseString("via"))->value().getStringView());
+  EXPECT_EQ(
+      "sample-filter",
+      request_stream->headers().get(Http::LowerCaseString("via"))[0]->value().getStringView());
 
   codec_client->close();
 }
