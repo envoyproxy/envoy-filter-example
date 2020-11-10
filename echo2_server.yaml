@@ -26,4 +26,4 @@ static_resources:
     filter_chains:
     - filters:
       - name: echo2
-        config:
+        typed_config:
