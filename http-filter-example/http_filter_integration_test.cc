@@ -5,7 +5,7 @@ class HttpFilterSampleIntegrationTest : public HttpIntegrationTest,
                                         public testing::TestWithParam<Network::Address::IpVersion> {
 public:
   HttpFilterSampleIntegrationTest()
-      : HttpIntegrationTest(Http::CodecClient::Type::HTTP1, GetParam(), realTime()) {}
+      : HttpIntegrationTest(Http::CodecClient::Type::HTTP1, GetParam()) {}
   /**
    * Initializer for an individual integration test.
    */
