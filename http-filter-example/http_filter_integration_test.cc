@@ -35,7 +35,7 @@ TEST_P(HttpFilterSampleIntegrationTest, Test1) {
   ASSERT_TRUE(fake_upstreams_[0]->waitForHttpConnection(*dispatcher_, fake_upstream_connection));
   ASSERT_TRUE(fake_upstream_connection->waitForNewStream(*dispatcher_, request_stream));
   ASSERT_TRUE(request_stream->waitForEndStream(*dispatcher_));
-  response->waitForEndStream();
+  ASSERT_TRUE(response->waitForEndStream());
 
   EXPECT_EQ(
       "sample-filter",
