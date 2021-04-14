@@ -33,7 +33,7 @@ TEST_P(HttpFilterSampleIntegrationTest, Test1) {
                                                         std::chrono::milliseconds(5)));
   ASSERT_TRUE(fake_upstream_connection->waitForNewStream(*dispatcher_, request_stream));
   ASSERT_TRUE(request_stream->waitForEndStream(*dispatcher_));
-  response->waitForEndStream();
+  ASSERT_TRUE(response->waitForEndStream());
 
   EXPECT_EQ("sample-filter",
                request_stream->headers().get(Http::LowerCaseString("via"))->value().getStringView());
