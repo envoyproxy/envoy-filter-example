@@ -25,6 +25,8 @@ INSTANTIATE_TEST_SUITE_P(IpVersions, HttpFilterSampleIntegrationTest,
 TEST_P(HttpFilterSampleIntegrationTest, Test1) {
   Http::TestRequestHeaderMapImpl headers{
       {":method", "GET"}, {":path", "/"}, {":authority", "host"}};
+  Http::TestRequestHeaderMapImpl response_headers{
+      {":status", "200"}};
 
   IntegrationCodecClientPtr codec_client;
   FakeHttpConnectionPtr fake_upstream_connection;
@@ -35,6 +37,7 @@ TEST_P(HttpFilterSampleIntegrationTest, Test1) {
   ASSERT_TRUE(fake_upstreams_[0]->waitForHttpConnection(*dispatcher_, fake_upstream_connection));
   ASSERT_TRUE(fake_upstream_connection->waitForNewStream(*dispatcher_, request_stream));
   ASSERT_TRUE(request_stream->waitForEndStream(*dispatcher_));
+  request_stream->encodeHeaders(response_headers, true);
   ASSERT_TRUE(response->waitForEndStream());
 
   EXPECT_EQ(
