@@ -3,7 +3,7 @@
 #include "envoy/buffer/buffer.h"
 #include "envoy/network/connection.h"
 
-#include "common/common/assert.h"
+#include "source/common/common/assert.h"
 
 namespace Envoy {
 namespace Filter {

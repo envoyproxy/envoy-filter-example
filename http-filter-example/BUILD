@@ -36,7 +36,7 @@ envoy_cc_library(
     repository = "@envoy",
     deps = [
         ":http_filter_lib",
-        "@envoy//include/envoy/server:filter_config_interface",
+        "@envoy//envoy/server:filter_config_interface",
     ],
 )
 
