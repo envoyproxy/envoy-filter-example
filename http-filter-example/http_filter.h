@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include "extensions/filters/http/common/pass_through_filter.h"
+#include "source/extensions/filters/http/common/pass_through_filter.h"
 
 #include "http-filter-example/http_filter.pb.h"
 
