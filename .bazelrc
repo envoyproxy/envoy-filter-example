@@ -1,1 +1,2 @@
 import %workspace%/envoy/.bazelrc
+try-import %workspace%/envoy/clang.bazelrc
