@@ -12,7 +12,7 @@ public:
   void SetUp() override { initialize(); }
 
   void initialize() override {
-    config_helper_.addFilter(
+    config_helper_.prependFilter(
         "{ name: sample, typed_config: { \"@type\": type.googleapis.com/sample.Decoder, key: via, "
         "val: sample-filter } }");
     HttpIntegrationTest::initialize();
