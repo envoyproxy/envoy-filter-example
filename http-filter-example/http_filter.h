@@ -5,6 +5,7 @@
 #include "source/extensions/filters/http/common/pass_through_filter.h"
 
 #include "http-filter-example/http_filter.pb.h"
+#include "source/common/common/logger.h"
 
 namespace Envoy {
 namespace Http {
@@ -39,9 +40,13 @@ public:
 private:
   const HttpSampleDecoderFilterConfigSharedPtr config_;
   StreamDecoderFilterCallbacks* decoder_callbacks_;
+  std::string cluster_header_;
 
   const LowerCaseString headerKey() const;
   const std::string headerValue() const;
+
+  // Read from shared memory
+  const std::string readClusterHeader() const;
 };
 
 } // namespace Http
