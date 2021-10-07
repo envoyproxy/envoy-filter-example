@@ -27,6 +27,7 @@ envoy_cc_library(
     deps = [
         ":pkg_cc_proto",
         "@envoy//source/extensions/filters/http/common:pass_through_filter_lib",
+        # "@envoy//source/common/common:logger_lib",
     ],
 )
 
