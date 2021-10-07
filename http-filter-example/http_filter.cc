@@ -32,7 +32,7 @@ const std::string HttpSampleDecoderFilter::readClusterHeader() const {
   std::cout << "attaching to shared memory";
   if(shm_allocate(SHM_ATTACH) == 0) {
     cout << "could not attach to shared memory" << std::endl;
-    return DEFAULT_ROUTE_DESTINATION;
+    return DEFAULT_ROUTE_DESTINATION.data();
   }
 
   std::cout << "attached to shared memory" << std::endl;
@@ -40,10 +40,10 @@ const std::string HttpSampleDecoderFilter::readClusterHeader() const {
 
   if (shared_data->signal == 0) {
     std::cout << "no data avialble in shared memory" << std::endl;
-    return DEFAULT_ROUTE_DESTINATION;
+    return DEFAULT_ROUTE_DESTINATION.data();
   }
 
-  const std::string: clusterHeader(shared_data->str);
+  const std::string clusterHeader{shared_data->str};
   std::cout << "read cluster header from shared memory, cluster_header: " << clusterHeader << std::endl;
 
   return clusterHeader ;
@@ -55,7 +55,7 @@ FilterHeadersStatus HttpSampleDecoderFilter::decodeHeaders(RequestHeaderMap& hea
   // read header from shared memory and store in `cluster_header_`
   cluster_header_ = readClusterHeader();
   std::cout << "cluster_header: " << cluster_header_ << std::endl;
-  headers.addCopy("cluster_header", cluster_header_);
+  headers.addCopy(LowerCaseString("cluster_header"), LowerCaseString(cluster_header_));
 
   // add a header
   headers.addCopy(headerKey(), headerValue());

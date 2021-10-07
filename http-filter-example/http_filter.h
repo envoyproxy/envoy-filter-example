@@ -10,7 +10,7 @@
 namespace Envoy {
 namespace Http {
 
-constexpr string DEFAULT_ROUTE_DESTINATION = "routing_destination";
+constexpr std::string_view DEFAULT_ROUTE_DESTINATION = "routing_destination";
 
 class HttpSampleDecoderFilterConfig {
 public:

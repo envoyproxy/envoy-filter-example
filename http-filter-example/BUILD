@@ -22,7 +22,7 @@ api_proto_package()
 envoy_cc_library(
     name = "http_filter_lib",
     srcs = ["http_filter.cc"],
-    hdrs = ["http_filter.h"],
+    hdrs = ["http_filter.h", "shared_data.h"],
     repository = "@envoy",
     deps = [
         ":pkg_cc_proto",
