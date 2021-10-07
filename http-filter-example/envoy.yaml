@@ -22,6 +22,7 @@ static_resources:
               - match: 
                   prefix: "/"
                 route: 
+                  #cluster_header: routing_destination
                   cluster: service_http_bin
                   auto_host_rewrite: true
           http_filters:
