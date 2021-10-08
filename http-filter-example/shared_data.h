@@ -35,11 +35,19 @@ int shm_allocate(int shm_mode){
       cout << "shmget error:" << errno << endl << endl;
       return 0;
    }    
-   shared_data = (struct shared_data *)shmat(shmid, (void*) 0, 0);
-   if (shared_data == (void *) -1) {
+   // shared_data = (struct shared_data *)shmat(shmid, (void*) 0, 0);
+   void *ret = shmat(shmid, NULL, 0);
+   // int *data = reinterpret_cast<int*>(ret);
+   // if ( data == NULL || *data == -1 ) {
+   //      cout << "shmat error:" << errno << endl << endl;
+   //      return 0;
+   // }
+   shared_data = reinterpret_cast<struct shared_data*>(ret);
+   if ( shared_data == NULL ) {
         cout << "shmat error:" << errno << endl << endl;
         return 0;
    }
+
    return 1; //success
 }
 

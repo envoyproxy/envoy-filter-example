@@ -29,7 +29,7 @@ const std::string HttpSampleDecoderFilter::headerValue() const {
 
 const std::string HttpSampleDecoderFilter::readClusterHeader() const {
 
-  std::cout << "attaching to shared memory";
+  std::cout << "attaching to shared memory" << std::endl;
   if(shm_allocate(SHM_ATTACH) == 0) {
     cout << "could not attach to shared memory" << std::endl;
     return DEFAULT_ROUTE_DESTINATION.data();
@@ -45,6 +45,7 @@ const std::string HttpSampleDecoderFilter::readClusterHeader() const {
 
   const std::string clusterHeader{shared_data->str};
   std::cout << "read cluster header from shared memory, cluster_header: " << clusterHeader << std::endl;
+  shared_data->signal = 0;
 
   return clusterHeader ;
 }
