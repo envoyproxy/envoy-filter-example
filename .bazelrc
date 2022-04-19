@@ -1,1 +1,2 @@
 import %workspace%/envoy/.bazelrc
+build --platform_mappings=envoy/bazel/platform_mappings
