@@ -27,7 +27,7 @@ public:
 
   std::string name() const override { return "echo2"; }
 
-  bool isTerminalFilterByProto(const Protobuf::Message&, FactoryContext&) override { return true; }
+  bool isTerminalFilterByProto(const Protobuf::Message&, ServerFactoryContext&) override { return true; }
 };
 
 /**
