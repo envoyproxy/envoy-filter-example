@@ -27,3 +27,4 @@ static_resources:
     - filters:
       - name: echo2
         typed_config:
+          "@type": type.googleapis.com/google.protobuf.Struct
