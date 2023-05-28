@@ -37,4 +37,4 @@ jobs:
     - run: mv upstream ../envoy
     - run: ci/sync_envoy.sh
       env:
-        ENVOY_SRCDIR=../envoy
+        ENVOY_SRC_DIR: ../envoy
