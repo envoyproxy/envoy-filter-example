@@ -13,7 +13,7 @@ if [[ "$CURRENT_SHA" == "$ENVOY_SHA" ]]; then
 fi
 
 git submodule update --init
-git -C envoy checkout "$ENVOY_SHA"
+git -C envoy/ checkout "$ENVOY_SHA"
 
 echo "Updating Workspace file."
 sed -e "s|{ENVOY_SRCDIR}|envoy|" "${ENVOY_SRCDIR}/ci/WORKSPACE.filter.example" > "WORKSPACE"
