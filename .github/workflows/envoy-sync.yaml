@@ -30,8 +30,7 @@ jobs:
     - name: 'Checkout Repository'
       uses: actions/checkout@v3
       with:
-        repository: phlax/envoy
-        # repository: envoyproxy/envoy
+        repository: envoyproxy/envoy
         fetch-depth: 0
         path: upstream
 
