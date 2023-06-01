@@ -16,7 +16,7 @@ git submodule update --init
 git -C envoy/ checkout "$ENVOY_SHA"
 
 echo "Updating Workspace file."
-sed -e "s|{ENVOY_SRCDIR}|envoy|" "${ENVOY_SRCDIR}/ci/WORKSPACE.filter.example" > "WORKSPACE"
+sed -e "s|{ENVOY_SRC_DIR}|envoy|" "${ENVOY_SRC_DIR}/ci/WORKSPACE.filter.example" > "WORKSPACE"
 
 echo "Committing, and Pushing..."
 git commit -a -m "Update Envoy submodule to $ENVOY_SHA"
