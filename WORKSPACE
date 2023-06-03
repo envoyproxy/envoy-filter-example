@@ -2,7 +2,7 @@ workspace(name = "envoy_filter_example")
 
 local_repository(
     name = "envoy",
-    path = "envoy",
+    path = "{ENVOY_SRCDIR}",
 )
 
 load("@envoy//bazel:api_binding.bzl", "envoy_api_binding")
