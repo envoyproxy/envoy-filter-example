@@ -6,8 +6,8 @@ echo "Updating Submodule..."
 # Update submodule to latest Envoy SHA
 ENVOY_SHA=$(git -C "$ENVOY_SRC_DIR" rev-parse HEAD)
 CURRENT_SHA="$(git  ls-files -s envoy | cut -d' ' -f2)"
-COMMITTER_NAME="envoy-update[bot]"
-COMMITTER_EMAIL="envoy-update[bot]@users.noreply.github.com"
+COMMITTER_NAME="${GITHUB_NAME:-}"
+COMMITTER_EMAIL="${GITHUB_EMAIL:-}"
 
 
 if [[ "$CURRENT_SHA" == "$ENVOY_SHA" ]]; then
