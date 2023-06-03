@@ -33,8 +33,15 @@ jobs:
         repository: envoyproxy/envoy
         fetch-depth: 0
         path: upstream
-
     - run: mv upstream ../envoy
+
+    - id: appauth
+      uses: envoyproxy/toolshed/gh-actions/appauth@actions-v0
+      with:
+        key: ${{ secrets.ENVOY_CI_UPDATE_BOT_KEY }}
+        app_id: ${{ secrets.ENVOY_CI_UPDATE_APP_ID }}
+
     - run: ci/sync_envoy.sh
       env:
         ENVOY_SRC_DIR: ../envoy
+        GITHUB_TOKEN: ${{ steps.appauth.outputs.value }}

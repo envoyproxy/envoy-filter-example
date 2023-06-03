@@ -6,8 +6,6 @@ echo "Updating Submodule..."
 # Update submodule to latest Envoy SHA
 ENVOY_SHA=$(git -C "$ENVOY_SRC_DIR" rev-parse HEAD)
 CURRENT_SHA="$(git  ls-files -s envoy | cut -d' ' -f2)"
-COMMITTER_NAME="envoy-sync[bot]"
-COMMITTER_EMAIL="envoy-sync[bot]@users.noreply.github.com"
 
 
 if [[ "$CURRENT_SHA" == "$ENVOY_SHA" ]]; then
@@ -22,8 +20,6 @@ echo "Updating Workspace file."
 sed -e "s|{ENVOY_SRC_DIR}|envoy|" "${ENVOY_SRC_DIR}/ci/WORKSPACE.filter.example" > "WORKSPACE"
 
 echo "Committing, and Pushing..."
-git config --global user.email "$COMMITTER_EMAIL"
-git config --global user.name "$COMMITTER_NAME"
 git commit -a -m "Update Envoy submodule to $ENVOY_SHA"
 git push origin main
 echo "Done"
