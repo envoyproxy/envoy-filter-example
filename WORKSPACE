@@ -2,7 +2,7 @@ workspace(name = "envoy_filter_example")
 
 local_repository(
     name = "envoy",
-    path = "{ENVOY_SRCDIR}",
+    path = "/home/ubuntu/envoy-filter-example/envoy",
 )
 
 load("@envoy//bazel:api_binding.bzl", "envoy_api_binding")
