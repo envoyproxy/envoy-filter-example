@@ -1,6 +1,5 @@
 load(
     "@envoy//bazel:envoy_build_system.bzl",
-    "envoy_package",
     "envoy_cc_binary",
     "envoy_cc_library",
     "envoy_cc_test",
@@ -37,7 +36,6 @@ envoy_cc_library(
     repository = "@envoy",
     deps = [
         ":http_filter_lib",
-        "@envoy//envoy/registry:registry",
         "@envoy//envoy/server:filter_config_interface",
     ],
 )
