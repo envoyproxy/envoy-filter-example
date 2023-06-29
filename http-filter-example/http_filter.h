@@ -15,10 +15,12 @@ public:
 
   const std::string& key() const { return key_; }
   const std::string& val() const { return val_; }
+  int extra() const { return extra_; }
 
 private:
   const std::string key_;
   const std::string val_;
+  const int extra_ = 0;
 };
 
 using HttpSampleDecoderFilterConfigSharedPtr = std::shared_ptr<HttpSampleDecoderFilterConfig>;
@@ -42,6 +44,7 @@ private:
 
   const LowerCaseString headerKey() const;
   const std::string headerValue() const;
+  int headerExtra() const;
 };
 
 } // namespace Http

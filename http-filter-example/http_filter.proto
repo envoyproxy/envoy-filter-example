@@ -7,4 +7,5 @@ import "validate/validate.proto";
 message Decoder {
     string key = 1 [(validate.rules).string.min_bytes = 1];
     string val = 2 [(validate.rules).string.min_bytes = 1];
+    string extra = 3 [(validate.rules).string.min_bytes = 1];
 }
