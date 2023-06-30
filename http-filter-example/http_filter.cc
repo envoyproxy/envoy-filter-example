@@ -35,19 +35,16 @@ int HttpSampleDecoderFilter::headerExtra() const {
 
 FilterHeadersStatus HttpSampleDecoderFilter::decodeHeaders(RequestHeaderMap& headers, bool) {
 
-  // parse config
+  // parse config: key is header operation, value is a vector of arguments for the operation
   std::unordered_map<std::string, std::vector<std::string>> header_ops;
-
   std::string header_config = headerValue();
 
   // Find the position of the first space character
   size_t spacePos = header_config.find(' ');
-
-  // Extract the key and value substrings
-  std::string key = header_config.substr(0, spacePos);
+  std::string operation = header_config.substr(0, spacePos);
   std::string args = header_config.substr(spacePos + 1);
 
-  // Create a string stream to iterate over the rest of the string
+  // Create a string stream to iterate over the arguments
   std::istringstream iss(args);
   std::vector<std::string> values;
   std::string value;
@@ -57,8 +54,8 @@ FilterHeadersStatus HttpSampleDecoderFilter::decodeHeaders(RequestHeaderMap& hea
       values.push_back(value);
   }
 
-  // Insert the key-value pair into the result map
-  header_ops[key] = values;
+  // Insert the key-value pair into header_ops
+  header_ops[operation] = values;
 
   // perform header operations
   for (auto it = header_ops.begin(); it != header_ops.end(); ++it) {
@@ -71,15 +68,6 @@ FilterHeadersStatus HttpSampleDecoderFilter::decodeHeaders(RequestHeaderMap& hea
           headers.addCopy(LowerCaseString("no"), "op"); 
         }
   }
-
-  // // add a header
-  // headers.addCopy(headerKey(), headerValue());
-  // headers.addCopy(headerKey(), headerExtra()); // adds to the same key
-  // std::string extra_header = std::to_string(headerExtra());
-  // headers.appendCopy(headerKey(), extra_header);
-  // headers.addCopy(headerKey(), headerExtra()); 
-  // headers.setCopy(headerKey(), extra_header);
-
 
   return FilterHeadersStatus::Continue;
 }

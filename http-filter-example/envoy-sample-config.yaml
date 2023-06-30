@@ -44,9 +44,9 @@ static_resources:
           - name: sample
             typed_config:
               "@type": type.googleapis.com/sample.Decoder
-              key: via
+              key: header-processing
               val: "set-header x-forwarded-proto https"
-              extra: "123456"
+              extra: "123456" # experiment with an additional value
           - name: envoy.filters.http.router
             typed_config:
               "@type": type.googleapis.com/envoy.extensions.filters.http.router.v3.Router
