@@ -2,64 +2,59 @@
 
 namespace Envoy {
 namespace Http {
-    ConditionProcessor::ConditionProcessor(std::string& condition_expression) {
-        parseCondition(condition_expression);
+    
+    bool AclProcessor::evaluateAcl(absl::string_view acl_expression) {
+        int temp = 1;
+        if (acl_expression.length() > 0 || temp)
+            return true;
+        return true;
     }
 
-    bool ConditionProcessor::evaluateCondition() {
-        // do map lookup
-        // map[name] -> ConditionProcessor
-
-        isTrue_ = 1;
-        return isTrue_;
+    bool ConditionProcessor::evaluateCondition(absl::string_view condition_expression) {
+        // split condition_expression into each acl, send to acl processor
+        // take conjunction and possibly negation of each acl and return the result
+        return true;
     }
 
-    int ConditionProcessor::parseCondition(std::string& condition_expression) {
-        // return immediately if condition has been evaluated
-        // else evaluate and add to map
-        return 0;
-    }
-
-
-    SetHeaderProcessor::SetHeaderProcessor(bool isRequest, std::string& set_header_expression) {
+    SetHeaderProcessor::SetHeaderProcessor(bool isRequest, absl::string_view set_header_expression) {
         isRequest_ = isRequest;
-
         parseOperation(set_header_expression);
     }
 
-    int SetHeaderProcessor::parseOperation(std::string& operation) {
+    int SetHeaderProcessor::parseOperation(absl::string_view operation_expression) {
         int err = 0;
-        // parse key
 
-        // parse values
+        // parse key and call setKey
+        std::string key = "mock_key";
+        setKey(key);
+
+        // parse values and call setVals
+        std::vector<std::string> vals({"mock_val1", "mock_val2"});
+        setVals(vals);
 
         // parse condition expression and call evaluate conditions on the parsed expression
-        std::string expression = "";
-        err = evaluateConditions(expression);
+        std::string condition_expression = "";
+        evaluateCondition(condition_expression);
+
         return err;
     }
 
-    int SetHeaderProcessor::evaluateConditions(std::string& conditions_expression) {
-        // split conditions by and
-        // search for negations
-        // for each condition, create a new ConditionProcessor instance and evaluate the condition
-        // evaluate the expression
-        bool result = true;
-
-        // set the condition based on the result
-        setCondition(result);
-
-        return 0;
+    int SetHeaderProcessor::evaluateCondition(absl::string_view condition_expression) {
+        int err = 0;
+        ConditionProcessor condition;
+        setCondition(condition.evaluateCondition(condition_expression));
+        return err;
     }
 
     int SetHeaderProcessor::evaluateOperation(RequestHeaderMap& headers) {
-        bool condition = getCondition();
-        const std::string& key = getKey();
-        const std::vector<std::string> header_vals = getVals();
+        int err = 0;
+        bool condition_result = getCondition(); // whether the condition is true or false
+        const std::string key = getKey();
+        const std::vector<std::string>& header_vals = getVals();
 
-        if (!condition) {
+        if (!condition_result) {
             // do nothing because condition is false
-            return 0;
+            return err;
         }
         
         // set header
@@ -67,8 +62,15 @@ namespace Http {
             headers.setCopy(LowerCaseString(key), header_val);
         }
 
-        return 0;
+        return err;
     }
+
+    // TODO: leaving implementation for later
+    int SetRequestPath::parseOperation(absl::string_view operation_expression) {return 0;}
+
+    int SetRequestPath::evaluateOperation(RequestHeaderMap& headers) {return 0;}
+
+    int SetRequestPath::evaluateCondition(absl::string_view condition_expression) {return 0;}
 
 } // namespace Http
 } // namespace Envoy

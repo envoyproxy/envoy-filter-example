@@ -8,69 +8,77 @@
 namespace Envoy {
 namespace Http {
 
-enum Operation {
-  OP_SET_HEADER = 0,
-  OP_SET_PATH = 1,
-};
-
 enum DynamicValue {
   DYN_URLP = 0,
   DYN_HDR = 1
 };
 
-class ConditionProcessor {
+class AclProcessor {
 public:
-  ConditionProcessor(std::string& condition_expression); // make this a string_view
-  ~ConditionProcessor() {}
-  bool evaluateCondition();
+  AclProcessor() {}
+  ~AclProcessor() {}
+  bool evaluateAcl(absl::string_view acl_expression);
 
 private:
-  int parseCondition(std::string& condition_expression);
-  bool isTrue_;
+  bool isTrue_; // not needed?
+};
+
+class ConditionProcessor {
+public:
+  ConditionProcessor() {}
+  ~ConditionProcessor() {}
+  bool evaluateCondition(absl::string_view condition_expression);
+
+private:
+  std::vector<Envoy::Http::AclProcessor> acl_processors_; // is there a need to store each acl?
+  bool isTrue_; // not needed? can directly return the result without storing it
 };
 
 class HeaderProcessor {
 public:
-  virtual int parseOperation(std::string& operation) = 0; // parses the arguments + condition, sends condition to its own class to be parsed
+  virtual ~HeaderProcessor() = default;
+  virtual int parseOperation(absl::string_view operation_expression) = 0; // parses the arguments + condition, sends each acl to AclProcessor to be parsed
   virtual int evaluateOperation(RequestHeaderMap& headers) = 0;
-  virtual int evaluateConditions(std::string& conditions_expression) = 0;
-  const bool getCondition() const { return condition_; }
+  virtual int evaluateCondition(absl::string_view condition_expression) = 0;
+  bool getCondition() const { return condition_; }
   void setCondition(bool result) { condition_ = result; }
 
-private:
-  std::vector<Envoy::Http::ConditionProcessor> condition_processors_;
+protected:
   bool condition_;
 };
 
 class SetHeaderProcessor : public HeaderProcessor {
 public:
-  SetHeaderProcessor(bool isRequest, std::string& set_header_expression);
-  ~SetHeaderProcessor() {}
-  virtual int parseOperation(std::string& operation);
+  SetHeaderProcessor(bool isRequest, absl::string_view set_header_expression);
+  virtual ~SetHeaderProcessor() {}
+  virtual int parseOperation(absl::string_view operation_expression);
   virtual int evaluateOperation(RequestHeaderMap& headers);
-  virtual int evaluateConditions(std::string& conditions_expression); // pass http-related metadata
+  virtual int evaluateCondition(absl::string_view condition_expression); // TODO: will need to pass http-related metadata in order to evaluate dynamic values
+
   const std::string& getKey() const { return header_key_; }
-  const std::vector<std::string> getVals() const { return header_vals_; } // TODO pass by reference instead
-  const bool isHttpRequest() const { return isRequest_; }
+  const std::vector<std::string>& getVals() const { return header_vals_; }
+  void setKey(std::string key) { header_key_ = key; }
+  void setVals(std::vector<std::string> vals) { header_vals_ = vals; }
+  bool isHttpRequest() const { return isRequest_; } // possibly superfluous
 
 private:
-  std::string fetchDynamicValue(DynamicValue val); // TODO brainstorm implementation
+  std::string fetchDynamicValue(DynamicValue val); // TODO: fetch query params, header values, etc -- leaving implementation for later, possibly need to make a separate class
 
-  bool isRequest_; // http filter will use this to determine whether to evaluate the operation in encodeHeaders or decodeHeaders
-  std::string header_key_;
-  std::vector<std::string> header_vals_;
+  bool isRequest_; // possibly superfluous: http filter will use this to determine whether to evaluate the operation in encodeHeaders or decodeHeaders
+  std::string header_key_; // header key to set
+  std::vector<std::string> header_vals_; // header values to set
 };
 
 class SetRequestPath : public HeaderProcessor {
 public:
   SetRequestPath();
-  ~SetRequestPath() {}
-  virtual int parseOperation(std::string& operation);
+  virtual ~SetRequestPath() {}
+  virtual int parseOperation(absl::string_view operation_expression);
   virtual int evaluateOperation(RequestHeaderMap& headers);
-  virtual int evaluateConditions(std::string& conditions_expression);
+  virtual int evaluateCondition(absl::string_view condition_expression);
 
 private:
-  std::string path_;
+  std::string path_; // path to set
 };
 
 } // namespace Http

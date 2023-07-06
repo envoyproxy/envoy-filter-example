@@ -26,6 +26,7 @@ envoy_cc_library(
     repository = "@envoy",
     deps = [
         ":pkg_cc_proto",
+        ":http_header_processor_lib",
         "@envoy//source/extensions/filters/http/common:pass_through_filter_lib",
     ],
 )
@@ -37,6 +38,17 @@ envoy_cc_library(
     deps = [
         ":http_filter_lib",
         "@envoy//envoy/server:filter_config_interface",
+    ],
+)
+
+envoy_cc_library(
+    name = "http_header_processor_lib",
+    srcs = ["header_processor.cc"],
+    hdrs = ["header_processor.h"],
+    repository = "@envoy",
+    deps = [
+        ":pkg_cc_proto",
+        "@envoy//source/extensions/filters/http/common:pass_through_filter_lib",
     ],
 )
 
