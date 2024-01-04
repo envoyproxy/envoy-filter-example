@@ -1,14 +1,14 @@
 name: Sync Envoy
 
+permissions:
+  contents: read
+
 on:
   workflow_dispatch:
 
 concurrency:
   group: ${{ github.workflow }}
   cancel-in-progress: true
-
-permissions:
-  contents: read
 
 jobs:
   sync:
@@ -22,20 +22,20 @@ jobs:
       }}
     steps:
     - id: appauth
-      uses: envoyproxy/toolshed/gh-actions/appauth@actions-v0
+      uses: envoyproxy/toolshed/gh-actions/appauth@80a2b0325d086b0dee546bb89496763cd11c7f8e # actions-v0
       with:
         key: ${{ secrets.ENVOY_CI_UPDATE_BOT_KEY }}
         app_id: ${{ secrets.ENVOY_CI_UPDATE_APP_ID }}
 
     - name: 'Checkout Repository'
-      uses: actions/checkout@v3
+      uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3.6.0
       with:
         ref: main
         token: ${{ steps.appauth.outputs.value }}
 
     # Checkout the Envoy repo at latest commit
     - name: 'Checkout Repository'
-      uses: actions/checkout@v3
+      uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3.6.0
       with:
         repository: envoyproxy/envoy
         fetch-depth: 0
