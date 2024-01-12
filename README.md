@@ -8,6 +8,8 @@ also provided.
 
 For an example of additional HTTP filters, see [here](http-filter-example).
 
+[![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/envoyproxy/envoy-filter-example/badge)](https://securityscorecards.dev/viewer/?uri=github.com/envoyproxy/envoy-filter-example)
+
 ## Building
 
 To build the Envoy static binary:
