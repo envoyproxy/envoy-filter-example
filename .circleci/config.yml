@@ -1,25 +1,28 @@
 references:
   envoy-build-image: &envoy-build-image
-    envoyproxy/envoy-build:latest
+    envoyproxy/envoy-build-ubuntu:41c5a05d708972d703661b702a63ef5060125c33
 
 version: 2
 jobs:
   build:
     docker:
-      - image: *envoy-build-image
+    - image: *envoy-build-image
+    - entrypoint: ./ci/in_docker.sh
+    - environment:
+        HOST_UID: $UID
     resource_class: xlarge
     steps:
-      - checkout
-      - run: git submodule update --init
-      - run: ./ci/do_ci.sh build
+    - checkout
+    - run: git submodule update --init
+    - run: ./ci/do_ci.sh build
   test:
     docker:
-      - image: *envoy-build-image
+    - image: *envoy-build-image
     resource_class: xlarge
     steps:
-      - checkout
-      - run: git submodule update --init
-      - run: ./ci/do_ci.sh test
+    - checkout
+    - run: git submodule update --init
+    - run: ./ci/do_ci.sh test
 
 workflows:
   version: 2
@@ -27,4 +30,3 @@ workflows:
     jobs:
       - build
       - test
-
