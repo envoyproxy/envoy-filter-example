@@ -4,6 +4,7 @@
 
 #include "envoy/registry/registry.h"
 #include "envoy/server/filter_config.h"
+#include "absl/status/statusor.h"
 
 namespace Envoy {
 namespace Server {
@@ -14,7 +15,7 @@ namespace Configuration {
  */
 class Echo2ConfigFactory : public NamedNetworkFilterConfigFactory {
 public:
-  Network::FilterFactoryCb createFilterFactoryFromProto(const Protobuf::Message&,
+  absl::StatusOr<Network::FilterFactoryCb> createFilterFactoryFromProto(const Protobuf::Message&,
                                                         FactoryContext&) override {
     return [](Network::FilterManager& filter_manager) -> void {
       filter_manager.addReadFilter(Network::ReadFilterSharedPtr{new Filter::Echo2()});
