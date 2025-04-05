@@ -2,6 +2,7 @@
 
 #include "envoy/registry/registry.h"
 #include "envoy/server/filter_config.h"
+#include "absl/status/statusor.h"
 
 #include "http-filter-example/http_filter.pb.h"
 #include "http-filter-example/http_filter.pb.validate.h"
@@ -13,7 +14,7 @@ namespace Configuration {
 
 class HttpSampleDecoderFilterConfigFactory : public NamedHttpFilterConfigFactory {
 public:
-  Http::FilterFactoryCb createFilterFactoryFromProto(const Protobuf::Message& proto_config,
+  absl::StatusOr<Http::FilterFactoryCb> createFilterFactoryFromProto(const Protobuf::Message& proto_config,
                                                      const std::string&,
                                                      FactoryContext& context) override {
 
